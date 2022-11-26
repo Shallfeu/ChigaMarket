@@ -1,0 +1,35 @@
+.check-blue {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__input {
+    width: 40px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  &__box {
+    margin-left: 15px;
+    color: #45f3ff;
+  }
+}
+
+.check-red {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__input {
+    width: 40px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  &__box {
+    margin-left: 15px;
+    color: #fd1c03;
+  }
+}
