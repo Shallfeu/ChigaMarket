@@ -1,0 +1,88 @@
+/*---------AccountPage----------------*/
+
+.account {
+  padding-top: 20px;
+  background-color: #e3e2df;
+
+  &__inner {
+  }
+
+  &__title {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+  }
+
+  &__main {
+    display: flex;
+  }
+
+  &__bar {
+    width: 30%;
+    height: 435px;
+    background: $white;
+    padding: 25px;
+  }
+
+  &__orders {
+    width: 70%;
+    background: $white;
+    margin-left: 20px;
+    padding: 20px;
+  }
+}
+
+.orders {
+  &__title {
+    font-size: 25px;
+    font-weight: 700;
+  }
+
+  &__list {
+    margin-top: 30px;
+  }
+}
+
+.bar {
+  &__title {
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  &__list {
+    margin-top: 20px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: transparent;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.5s;
+
+    &:hover {
+      cursor: pointer;
+      background: #808080;
+    }
+  }
+
+  &__item-text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__icon {
+    font-size: 24px;
+    margin-right: 15px;
+  }
+}
+
+.order {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
