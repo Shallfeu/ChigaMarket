@@ -1,4 +1,4 @@
-import API from "../../api";
+import stuffService from "../../services/stuffService";
 import {
   StuffRequested,
   StuffRequestReceived,
@@ -8,7 +8,7 @@ import {
 export const loadStuff = () => async (dispatch: any) => {
   try {
     dispatch(StuffRequested());
-    const content = await API.produts.fetchAll();
+    const { content } = await stuffService.fetchAll();
     dispatch(StuffRequestReceived(content));
   } catch (error: any) {
     dispatch(StuffRequestFailed(error.message));

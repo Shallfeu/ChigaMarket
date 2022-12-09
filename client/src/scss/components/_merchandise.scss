@@ -1,10 +1,6 @@
 .merchandise {
-  background: $background;
-
-  &__back {
-    background: black;
-    width: 100px;
-  }
+  padding-top: 30px;
+  background-color: $background;
 
   &__inner {
     display: flex;
@@ -12,15 +8,24 @@
   }
 
   &__main {
+    width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-top: 30px;
   }
 }
 
 .main {
+  display: flex;
+  justify-content: space-around;
+
+  &__like {
+    margin-top: 10px;
+  }
+
   &__img {
-    width: 500px;
+    width: 300px;
+    height: 350px;
     background: $white;
     border: 4px solid rgba(156, 133, 133, 0.692);
     border-radius: 25px;
@@ -28,6 +33,10 @@
 
   &__info {
     margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
   }
 
   &__title {
@@ -38,11 +47,12 @@
   &__desc {
     margin-top: 15px;
     margin-bottom: 20px;
+    max-width: 400px;
   }
 }
 
 .addToCart {
-  margin: 25px;
+  margin-top: 25px;
   padding: 20px;
   background: #0066b2;
   border-radius: 15px;

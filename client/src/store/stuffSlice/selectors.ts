@@ -1,6 +1,18 @@
-export const getAllStuff = (state: any) => state.stuff.items;
+import { RootState } from "../store";
 
-export const getStuffLoadingStatus = (state: any) => state.stuff.loading;
+export const getAllStuff = (state: RootState) => state.stuff.items;
 
-export const getProductById = (id: string) => (state: any) =>
-  state.stuff.items.find((el: any) => el.id === id);
+export const getStuffByCategory = (general: string) => (state: RootState) =>
+  state.stuff.items?.filter((el) => el.category.general === general);
+
+export const getStuffBySubcategory =
+  (subcategory: string) => (state: RootState) =>
+    state.stuff.items?.filter((el) => el.category.subcategory === subcategory);
+
+export const getStuffByExtraCategory = (extra: string) => (state: RootState) =>
+  state.stuff.items?.filter((el) => el.category.extra === extra);
+
+export const getStuffLoadingStatus = (state: RootState) => state.stuff.loading;
+
+export const getProductById = (id: string) => (state: RootState) =>
+  state.stuff.items?.find((el) => el._id === id);

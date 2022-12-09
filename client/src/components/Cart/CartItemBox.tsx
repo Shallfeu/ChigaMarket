@@ -1,36 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
 // Libs
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../store/hooks";
 // Components
-import { addItem, minusItem, removeItem } from "../../store/cartSlice/slice";
+import QuantityBtns from "../common/QuantityBtns";
+// Utils
+import { useAppDispatch } from "../../store/hooks";
+import { RemoveItem } from "../../store/cartSlice/actions";
+import { useFavourite } from "../../hooks/useFavourite";
+// Types
+import { CartItem } from "../../store/cartSlice/slice";
 
-type Product = {
-  id: string;
-  discount: number;
-  cover: string;
-  name: string;
-  price: number;
-  quantity: number;
-};
-
-const CartItemBox: React.FC<Product> = ({
-  id,
+const CartItemBox: React.FC<CartItem> = ({
+  _id,
   discount,
-  cover,
+  image,
   name,
   price,
+  brand,
   quantity,
+  category,
 }) => {
   const dispatch = useAppDispatch();
-  const [inFavourites, setInFavourites] = useState(false);
   const totalPrice = price * quantity;
   const totalPriceWithDiscount = (price - (price * discount) / 100) * quantity;
+  const [isFavourite, setIsFavourite] = useFavourite(_id);
+
+  const onClickRemove = () => {
+    if (window.confirm("Are you sure you want to remove")) {
+      dispatch(RemoveItem(_id));
+    }
+  };
 
   return (
-    <div className="details__item" key={id}>
-      <Link to={`/${id}`}>
-        <img src={cover} alt="product" className="item__img" />
+    <div className="details__item" key={_id}>
+      <Link to={`/product/${_id}`}>
+        <img src={image} alt="product" className="item__img" />
       </Link>
 
       <div className="item__information">
@@ -38,19 +42,21 @@ const CartItemBox: React.FC<Product> = ({
           <h1 className="detail__title">{name}</h1>
 
           <div className="detail__description">
-            <span className="description__field">Company</span>
-            <span className="description__field">Weight</span>
+            <span className="description__field">Company: {brand}</span>
+            <span className="description__field">
+              Category: {category.general}
+            </span>
           </div>
 
           <div className="detail__setting">
             <button
               type="button"
               className="detail__button"
-              onClick={() => setInFavourites(!inFavourites)}
+              onClick={() => setIsFavourite()}
             >
               <i
                 className={`detail__img ${
-                  inFavourites ? "bi bi-heart-fill" : "bi bi-heart"
+                  isFavourite ? "bi bi-heart-fill" : "bi bi-heart"
                 }`}
                 role="button"
               ></i>
@@ -59,7 +65,7 @@ const CartItemBox: React.FC<Product> = ({
             <button
               type="button"
               className="detail__button"
-              onClick={() => dispatch(removeItem(id))}
+              onClick={() => onClickRemove()}
             >
               <i className="bi bi-x-lg detail__img"></i>
               <span className="detail__span">Remove</span>
@@ -73,35 +79,7 @@ const CartItemBox: React.FC<Product> = ({
             <h6 className="price__total-crossed">{totalPrice}.00$</h6>
           </span>
 
-          <div className="quantity">
-            <button
-              type="button"
-              disabled={quantity < 2}
-              className="quantity__button left"
-              onClick={() => dispatch(minusItem(id))}
-            >
-              <i className="quantity__i bi bi-dash-lg"></i>
-            </button>
-            <span className="quantity__value">{quantity}</span>
-            <button
-              type="button"
-              className="quantity__button right"
-              onClick={() =>
-                dispatch(
-                  addItem({
-                    id,
-                    discount,
-                    cover,
-                    name,
-                    price,
-                    quantity,
-                  })
-                )
-              }
-            >
-              <i className="quantity__i bi bi-plus-lg"></i>
-            </button>
-          </div>
+          <QuantityBtns _id={_id} quantity={quantity} />
         </div>
       </div>
     </div>

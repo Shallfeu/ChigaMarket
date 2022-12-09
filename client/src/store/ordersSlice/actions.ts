@@ -1,16 +1,41 @@
-import API from "../../api";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import ordersService from "../../services/order.service";
 import {
   OrderRequested,
   OrderRequestReceived,
   OrderRequestFailed,
 } from "./slice";
 
-export const loadStuff = () => async (dispatch: any) => {
+export const loadOrders = () => async (dispatch: any) => {
   try {
     dispatch(OrderRequested());
-    const content = await API.produts.fetchAll();
+    const { content } = await ordersService.fetchAll();
     dispatch(OrderRequestReceived(content));
   } catch (error: any) {
     dispatch(OrderRequestFailed(error.message));
   }
 };
+
+export const createOrder = createAsyncThunk(
+  "orders/createOrder",
+  async (
+    payload: {
+      address: string;
+      userName: string;
+      products: any[];
+      totalCost: number;
+    },
+    thunkAPI
+  ) => {
+    try {
+      payload.products = payload.products.map((product) => ({
+        productId: product._id,
+        quantity: product.quantity,
+      }));
+      const { content } = await ordersService.create({ ...payload });
+      return content;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

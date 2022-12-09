@@ -32,7 +32,79 @@
   }
 }
 
+// Orders
 .orders {
+  &__list-item {
+    margin-top: 20px;
+    background-color: #45f3ff;
+    padding: 25px;
+    border-radius: 25px;
+  }
+
+  &__title {
+    font-size: 25px;
+    font-weight: 700;
+  }
+
+  &__list {
+    margin-top: 20px;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+    justify-content: center;
+  }
+
+  &__row-info {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+    justify-content: center;
+    background-color: $white;
+    padding: 20px;
+    border-radius: 25px;
+  }
+}
+
+.row-info {
+  &__item {
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  &__text {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    color: $gray-red;
+  }
+}
+
+// Favourite
+.favourite {
+  &__empty {
+    width: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
   &__title {
     font-size: 25px;
     font-weight: 700;
@@ -40,6 +112,9 @@
 
   &__list {
     margin-top: 30px;
+    display: grid;
+    grid-template-columns: 180px 180px 180px 180px;
+    grid-gap: 20px;
   }
 }
 
@@ -81,8 +156,83 @@
   }
 }
 
-.order {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 20px;
+// Change
+.change {
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #23242a;
+    width: 400px;
+    margin: 0 auto;
+    padding: 25px;
+    border-radius: 25px;
+  }
+
+  &__title {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 40px;
+  }
+
+  &__btn {
+    margin-top: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    background: #45f3ff;
+    color: #1c1c1c;
+    transition: 0.5s;
+
+    &:hover {
+      cursor: pointer;
+      background: $gray-red;
+    }
+  }
+}
+
+// address
+.address {
+  &__inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 30px;
+  }
+
+  &__form {
+    background-color: #1c2c3c;
+    border-radius: 25px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__list {
+  }
+
+  &__item {
+    padding: 10px 25px;
+    background-color: #1c2c3c;
+    margin-top: 5px;
+    border-radius: 25px;
+    color: $white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__item-btn {
+    border-radius: 15px;
+    padding: 5px 10px;
+    background-color: $gray-red;
+    transition: 0.5s;
+    color: $white;
+
+    &:hover {
+      color: black;
+      background-color: #45f3ff;
+      cursor: pointer;
+    }
+  }
 }

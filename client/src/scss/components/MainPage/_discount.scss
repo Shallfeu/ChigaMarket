@@ -1,0 +1,71 @@
+/* -----Discount----------- */
+
+.discount {
+  padding-top: 30px;
+  background: $background;
+
+  &__inner {
+    background-color: $white;
+    padding: 10px 20px;
+    border-radius: 10px;
+  }
+
+  &__cells {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 30px;
+    margin-top: 15px;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    color: $gray-red;
+    font-size: 20px;
+  }
+
+  &__title {
+    margin-left: 5px;
+    font-size: 25px;
+  }
+}
+
+/* ----------DiscountCart-----------*/
+
+.discount-card {
+  background-color: $white;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 270px;
+
+  &__img {
+    width: 150px;
+    height: 150px;
+    border-radius: 25px;
+  }
+
+  &__title {
+    margin-top: 20px;
+    font-weight: 400;
+    font-size: 17px;
+  }
+
+  &__price {
+    color: $gray-red;
+    font-size: 15px;
+    font-weight: 500;
+  }
+}

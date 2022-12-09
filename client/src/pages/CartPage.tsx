@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 // Components
 import CartEmpty from "../components/Cart/CartEmpty";
 import CartItemBox from "../components/Cart/CartItemBox";
 import Header from "../components/Header/Header";
+import OrderForm from "../components/Order/OrderForm";
+import Popup from "../components/Popup";
+// Utils
 import {
   getCartItems,
   getTotalDiscount,
@@ -11,11 +14,12 @@ import {
 import { useAppSelector } from "../store/hooks";
 
 const Cart: React.FC = () => {
-  const data = useAppSelector(getCartItems);
-  const totalPrice = useAppSelector(getTotalPrice);
+  const products = useAppSelector(getCartItems);
   const totalDiscount = useAppSelector(getTotalDiscount);
+  const totalPrice = useAppSelector(getTotalPrice) - totalDiscount;
+  const [toggle, setToggle] = useState(false);
 
-  if (data.length === 0)
+  if (products.length === 0)
     return (
       <>
         <Header />
@@ -28,25 +32,34 @@ const Cart: React.FC = () => {
       <Header />
       <section className="cart">
         <div className="container">
+          <Popup trigger={toggle} setToggle={setToggle}>
+            <OrderForm products={products} totalCost={totalPrice} />
+          </Popup>
           <div className="cart__inner">
             <div className="cart__details">
-              {data.map((item: any) => {
+              {products.map((item: any) => {
                 return (
                   <CartItemBox
-                    key={item.id}
-                    id={item.id}
+                    key={item._id}
+                    _id={item._id}
                     discount={item.discount}
-                    cover={item.cover}
+                    image={item.image}
                     name={item.name}
                     price={item.price}
                     quantity={item.quantity}
+                    category={item.category}
+                    brand={item.brand}
                   />
                 );
               })}
             </div>
 
             <div className="cart__payment">
-              <button type="button" className="payment__button">
+              <button
+                type="button"
+                className="payment__button"
+                onClick={() => setToggle(true)}
+              >
                 Go to payment
               </button>
               <div className="payment__area">
@@ -54,15 +67,15 @@ const Cart: React.FC = () => {
                 <ul className="payment__info">
                   <li className="payment__total payment-row">
                     <h3 className="payment__h3">Total price</h3>
-                    <span className="payment__total">{totalPrice}$</span>
+                    <span className="payment__total">${totalPrice}</span>
                   </li>
                   <li className="payment__quantity payment-row">
                     <h3 className="payment__h3">Quantity</h3>
-                    <span className="payment__quan">{data.length}</span>
+                    <span className="payment__quan">{products.length}</span>
                   </li>
                   <li className="payment__discount payment-row">
                     <h3 className="payment__h3">Discount</h3>
-                    <span className="payment__disc">{totalDiscount}</span>
+                    <span className="payment__disc">${totalDiscount}</span>
                   </li>
                 </ul>
               </div>

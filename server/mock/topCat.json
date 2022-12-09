@@ -1,0 +1,17 @@
+[
+  {
+    "image": "./images/top/category-1.png",
+    "categories": { "general": "electronic", "subcategory": "headphones" },
+    "desc": "3k orders this week"
+  },
+  {
+    "image": "./images/top/category-2.png",
+    "categories": { "general": "electronic", "subcategory": "watches" },
+    "desc": "4k orders this week"
+  },
+  {
+    "image": "./images/top/category-3.png",
+    "categories": { "general": "fashion", "subcategory": "sunglasses" },
+    "desc": "6k orders this week"
+  }
+]

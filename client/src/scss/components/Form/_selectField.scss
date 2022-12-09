@@ -1,0 +1,14 @@
+.select {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__form {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  &__label {
+  }
+}

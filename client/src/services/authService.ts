@@ -1,38 +1,26 @@
 import axios from "axios";
+
 import localStorageService from "./localStorageService";
+import config from "../config.json";
 
 const httpAuth = axios.create({
-  baseURL: "https://identitytoolkit.googleapis.com/v1/",
+  baseURL: `${config.apiEndPoint}/auth/`,
   params: {
     key: process.env.REACT_APP_FIREBASE_KEY,
   },
 });
 
-const regUrl = "accounts:signUp";
-const logUrl = "accounts:signInWithPassword";
+const regUrl = "signUp";
+const logUrl = "signIn";
 
 const authService = {
-  register: async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
-    const { data } = await httpAuth.post(regUrl, {
-      email,
-      password,
-      returnSecureToken: true,
-    });
+  register: async (payload: { email: string; password: string }) => {
+    const { data } = await httpAuth.post(regUrl, payload);
     return data;
   },
 
-  login: async ({ email, password }: { email: string; password: string }) => {
-    const { data } = await httpAuth.post(logUrl, {
-      email,
-      password,
-      returnSecureToken: true,
-    });
+  login: async (payload: { email: string; password: string }) => {
+    const { data } = await httpAuth.post(logUrl, payload);
     return data;
   },
 

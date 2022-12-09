@@ -12,7 +12,12 @@ const schema = new Schema({
     password: {
         type: String,
     },
-    image: String,
+    image: {
+        type: String,
+    },
+    avatar: {
+        type: String,
+    },
     sex: {
         type: String,
         enum:['male', 'female']

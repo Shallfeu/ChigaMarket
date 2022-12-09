@@ -1,11 +1,15 @@
 import React from "react";
-import { useAppSelector } from "../../store/hooks";
 // Components
 import FlashSlider from "./FlashSlider";
-import { getAllStuff } from "../../store/stuffSlice/selectors";
+import Loader from "../common/Loader";
+// Utils
+import { getStuffByExtraCategory } from "../../store/stuffSlice/selectors";
+import { useAppSelector } from "../../store/hooks";
 
 const FlashDeals: React.FC = () => {
-  const stuff = useAppSelector(getAllStuff);
+  const products = useAppSelector(getStuffByExtraCategory("flash"));
+
+  if (!products) return <Loader />;
 
   return (
     <section className="flash-deals">
@@ -16,7 +20,7 @@ const FlashDeals: React.FC = () => {
             <h1 className="flash-deals__title">Flash Deals</h1>
           </div>
           <div className="flash-deals__slider">
-            <FlashSlider products={stuff} />
+            <FlashSlider products={products} />
           </div>
         </div>
       </div>

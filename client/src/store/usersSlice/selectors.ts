@@ -1,6 +1,13 @@
-export const getAllUsers = (state: any) => state.users.items;
+import { RootState } from "../store";
 
-export const getUsersLoadingStatus = (state: any) => state.users.loading;
+export const getUsers = (state: RootState) => state.users.items;
 
-export const getUserById = (id: string) => (state: any) =>
-  state.users.items.find((el: any) => el.id === id);
+export const getUsersLoading = (state: RootState) => state.users.loading;
+
+export const getUserById = (userId: string) => (state: RootState) => {
+  const { items } = state.users;
+  if (items) {
+    return items.find((el) => el._id === userId);
+  }
+  return null;
+};

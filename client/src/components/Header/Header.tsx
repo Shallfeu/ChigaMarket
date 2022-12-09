@@ -2,11 +2,16 @@ import React, { useEffect } from "react";
 // Libs
 import { NavLink } from "react-router-dom";
 // Components
+import Search from "./Search";
+// Utils
 import { getCartItems } from "../../store/cartSlice/selectors";
 import { useAppSelector } from "../../store/hooks";
-import Search from "./Search";
+import { getCurrentUserId } from "../../store/authSlice/selectors";
+import { getUserById } from "../../store/usersSlice/selectors";
 
 const Header: React.FC = () => {
+  const currentUserId = useAppSelector(getCurrentUserId);
+  const currentUser = useAppSelector(getUserById(currentUserId));
   const cartItems = useAppSelector(getCartItems);
   const items = useAppSelector(getCartItems);
   const isMounted = React.useRef(false);
@@ -29,8 +34,16 @@ const Header: React.FC = () => {
           <Search />
 
           <div className="icons">
-            <NavLink to="/account" className="icons__item">
-              <i className="bi bi-person-fill"></i>
+            <NavLink to="/account/orders" className="icons__item">
+              {currentUser ? (
+                <img
+                  src={currentUser.image}
+                  alt="avatar"
+                  className="icons__avatar"
+                />
+              ) : (
+                <i className="bi bi-person-fill"></i>
+              )}
             </NavLink>
 
             <NavLink to="/cart" className="icons__item cart-link">

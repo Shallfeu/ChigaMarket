@@ -1,0 +1,26 @@
+[
+  {
+    "image": "./images/brands/apple.svg",
+    "name": "Apple"
+  },
+  {
+    "image": "./images/brands/samsung.svg",
+    "name": "Samsung"
+  },
+  {
+    "image": "./images/brands/nokia.svg",
+    "name": "Nokia"
+  },
+  {
+    "image": "./images/brands/vivo.svg",
+    "name": "Vivo"
+  },
+  {
+    "image": "./images/brands/xi.svg",
+    "name": "Redmi"
+  },
+  {
+    "image": "./images/brands/sony.svg",
+    "name": "Sony"
+  }
+]

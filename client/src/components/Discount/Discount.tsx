@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
-// api
-import API from "../../api";
+import React from "react";
+// Libs
+import { Link } from "react-router-dom";
 // Components
-import DiscountSlider from "./DiscountSlider";
+import ViewAllBtn from "../common/ViewAllBtn";
+import Loader from "../common/Loader";
+import ArrivalCard from "../common/ArrivalCard";
+// Utils
+import { useAppSelector } from "../../store/hooks";
+import { getStuffByExtraCategory } from "../../store/stuffSlice/selectors";
 
 const Discount: React.FC = () => {
-  const [discount, setDiscount] = useState();
+  const products = useAppSelector(getStuffByExtraCategory("discount"));
 
-  useEffect(() => {
-    API.discount.fetchAll().then((data) => setDiscount(data));
-  }, []);
-
-  if (!discount) return <>Loading...</>;
+  if (!products) return <Loader />;
 
   return (
     <section className="discount">
@@ -22,12 +23,19 @@ const Discount: React.FC = () => {
               <i className="bi bi-gift discount__icon"></i>
               <h1 className="discount__title">Big Discount</h1>
             </div>
-            <button className="viewall-btn" type="button">
-              View all<i className="bi bi-caret-right-fill"></i>
-            </button>
+            <ViewAllBtn direction="discount" />
           </div>
           <div className="discount__cells">
-            <DiscountSlider data={discount} />
+            {products.map((product) => (
+              <Link to={`/product/${product._id}`} key={product._id}>
+                <ArrivalCard
+                  image={product.image}
+                  name={product.name}
+                  value={`${product.price}`}
+                  isMoney
+                />
+              </Link>
+            ))}
           </div>
         </div>
       </div>

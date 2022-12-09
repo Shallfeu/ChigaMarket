@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
-// api
-import API from "../api";
+import React from "react";
+// Libs
+import { Link } from "react-router-dom";
 // Components
 import ArrivalCard from "./common/ArrivalCard";
+import ViewAllBtn from "./common/ViewAllBtn";
+import Loader from "./common/Loader";
+// Utils
+import { useAppSelector } from "../store/hooks";
+import { getStuffByExtraCategory } from "../store/stuffSlice/selectors";
 
 const NewArrivals: React.FC = () => {
-  const [arrivals, setArrivals] = useState<any>();
+  const products = useAppSelector(getStuffByExtraCategory("arrivals"));
 
-  useEffect(() => {
-    API.arrivals.fetchAll().then((data) => setArrivals(data));
-  }, []);
-
-  if (!arrivals) return <>Loading...</>;
+  if (!products) return <Loader />;
 
   return (
     <section className="arrivals">
@@ -25,18 +26,19 @@ const NewArrivals: React.FC = () => {
               />
               <h1 className="arrivals__title">New Arrivals</h1>
             </div>
-            <button className="viewall-btn" type="button">
-              View all<i className="bi bi-caret-right-fill"></i>
-            </button>
+
+            <ViewAllBtn direction="new-arrivals" />
           </div>
           <div className="arrivals__cells">
-            {arrivals.map((el: any) => (
-              <ArrivalCard
-                cover={el.cover}
-                name={el.name}
-                value={el.price}
-                isMoney
-              />
+            {products.map((product) => (
+              <Link to={`/product/${product._id}`} key={product._id}>
+                <ArrivalCard
+                  image={product.image}
+                  name={product.name}
+                  value={`${product.price}`}
+                  isMoney
+                />
+              </Link>
             ))}
           </div>
         </div>

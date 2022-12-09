@@ -25,8 +25,6 @@ const TextField: React.FC<TextFieldProps> = ({
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const getInputClasses = () => `input-${color}__box ${error ? "invalid" : ""}`;
-
   const toggleShowPassword = () => {
     if (!showPassword) {
       setShowPassword(true);
@@ -40,7 +38,7 @@ const TextField: React.FC<TextFieldProps> = ({
       <div className={`input-${color}__area`}>
         <input
           id={label}
-          className={getInputClasses()}
+          className={`input-${color}__box`}
           type={type === "text" ? "text" : showPassword ? "text" : "password"}
           name={name}
           value={value}

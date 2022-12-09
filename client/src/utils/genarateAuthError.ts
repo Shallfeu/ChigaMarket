@@ -1,15 +1,18 @@
 export function generateAuthError(message: string) {
   switch (message) {
     case "EMAIL_NOT_FOUND":
-      return "Пользователя с таким Email не существует";
+      return "This email doesn't exist";
 
     case "INVALID_PASSWORD":
-      return "Неверный пароль";
+      return "Invalid password";
 
     case "EMAIL_EXISTS":
-      return "Пользователь с таким Email уже существует";
+      return "User with this email already exists";
+
+    case "INVALID_DATA":
+      return "Invalid email or password";
 
     default:
-      return "Слишком много попыток входа, попробуйте позже";
+      return "Too many attempts, try it later";
   }
 }

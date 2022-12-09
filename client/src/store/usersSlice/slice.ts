@@ -1,8 +1,7 @@
 // Libs
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-// Services
-import localStorageService from "../../services/localStorageService";
+import { UpdatePassword } from "./actions";
 
 export type IUser = {
   _id: string;
@@ -12,31 +11,22 @@ export type IUser = {
   name: string;
   password: string;
   sex: string;
+  adresses: string[];
 };
 
 type UserState = {
   items: IUser[] | null;
   loading: boolean;
   error: string | null;
-  auth: { userId: string | null } | null;
-  logged: boolean;
-  created: boolean;
-  dataLoaded: boolean;
 };
 
 const initialState: UserState = {
   items: null,
   loading: false,
   error: null,
-  auth: localStorageService.getAccessToken()
-    ? { userId: localStorageService.getUserId() }
-    : null,
-  logged: true,
-  created: true,
-  dataLoaded: false,
 };
 
-const usersSlice: any = createSlice({
+const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
@@ -46,8 +36,6 @@ const usersSlice: any = createSlice({
 
     UsersReceived(state, { payload }: PayloadAction<IUser[]>) {
       state.loading = false;
-      state.dataLoaded = true;
-      state.error = null;
       state.items = payload;
     },
 
@@ -56,28 +44,7 @@ const usersSlice: any = createSlice({
       state.error = payload;
     },
 
-    AuthRequestSuccess(state, { payload }: PayloadAction<{ userId: string }>) {
-      state.logged = true;
-      state.auth = { ...payload };
-    },
-
-    AuthRequestFailed(state, { payload }: PayloadAction<string>) {
-      state.error = payload;
-    },
-
-    CreateUserRequestSuccess(state, { payload }: PayloadAction<IUser>) {
-      state.created = true;
-      state.items?.push(payload);
-    },
-
-    UserLogOut(state) {
-      state.items = null;
-      state.auth = null;
-      state.logged = false;
-      state.dataLoaded = false;
-    },
-
-    UpdateUsers(state, { payload }: PayloadAction<IUser>) {
+    UpdateUsers(state, { payload }: PayloadAction<any>) {
       if (state.items) {
         const updatedIndex = state.items.findIndex(
           (el) => el._id === payload._id
@@ -86,16 +53,25 @@ const usersSlice: any = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(
+      UpdatePassword.fulfilled,
+      (state, { payload }: PayloadAction<any>) => {
+        if (state.items) {
+          const updatedIndex = state.items.findIndex(
+            (el) => el._id === payload._id
+          );
+          state.items[updatedIndex] = { ...payload };
+        }
+      }
+    );
+  },
 });
 
 export const {
   UsersRequested,
   UsersReceived,
   UsersRequestedFailed,
-  AuthRequestSuccess,
-  AuthRequestFailed,
-  CreateUserRequestSuccess,
-  UserLogOut,
   UpdateUsers,
 } = usersSlice.actions;
 

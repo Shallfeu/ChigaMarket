@@ -9,32 +9,21 @@ const http = axios.create({ baseURL: configFile.apiEndPoint });
 
 http.interceptors.request.use(
   async (config) => {
-    if (configFile.isFireBase) {
-      if (!config.url) return;
+    const expiriesDate = localStorageService.getExpiresToken();
+    const refreshToken = localStorageService.getRefreshToken();
+    const isExpired = refreshToken && expiriesDate < Date.now();
 
-      const containslash = /\/$/gi.test(config.url);
-
-      config.url = `${
-        containslash ? config.url.slice(0, -1) : config.url
-      }.json`;
-
-      const expiriesDate = localStorageService.getExpiresToken();
-      const refreshToken = localStorageService.getRefreshToken();
-
-      if (refreshToken && expiriesDate < Date.now()) {
-        const data = await authService.refresh();
-
-        localStorageService.setTokens({
-          refreshToken: data.refresh_token,
-          idToken: data.id_token,
-          localId: data.user_id,
-          expiresIn: data.expires_in,
-        });
-      }
-
-      const accessToken = localStorageService.getAccessToken();
-      if (accessToken) config.params = { ...config.params, auth: accessToken };
+    if (isExpired) {
+      const data = await authService.refresh();
+      localStorageService.setTokens(data);
     }
+
+    const accessToken = localStorageService.getAccessToken();
+    if (accessToken)
+      config.headers = {
+        ...config.headers,
+        Authorization: `Bearer ${accessToken}`,
+      };
 
     return config;
   },
@@ -51,15 +40,16 @@ http.interceptors.response.use(
     if (configFile.isFireBase) {
       res.data = { content: trasformData(res.data) };
     }
+    res.data = { content: res.data };
     return res;
   },
   (error) => {
-    const expectedErros =
+    const expectedErrors =
       error.response &&
       error.response.status >= 400 &&
       error.response.status < 500;
 
-    if (!expectedErros) {
+    if (!expectedErrors) {
       toast.error("Something went wrong. Try it later :)");
     }
 

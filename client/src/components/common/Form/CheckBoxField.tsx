@@ -21,9 +21,6 @@ const CheckBoxField: React.FC<CheckBoxFieldProps> = ({
     onChange({ name: name, value: !value });
   };
 
-  const getCheckBoxClasses = () =>
-    `check-${color}__box ${error ? "invalid" : ""}`;
-
   return (
     <div className={`check-${color}`}>
       <input
@@ -34,7 +31,7 @@ const CheckBoxField: React.FC<CheckBoxFieldProps> = ({
         onChange={handleChange}
         checked={value}
       />
-      <label className={getCheckBoxClasses()} htmlFor="flexCheckDefault">
+      <label className={`check-${color}__box`} htmlFor="flexCheckDefault">
         {children}
       </label>
       {error && <div className="invalid">{error}</div>}

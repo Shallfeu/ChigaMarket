@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 // Libs
+import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 // Components
 import CheckBoxField from "../../components/common/Form/CheckBoxField";
 import TextField from "../../components/common/Form/TextField";
+import { signIn } from "../../store/authSlice/actions";
+import { useAppDispatch } from "../../store/hooks";
 
 interface dataState {
   email: string;
@@ -13,6 +15,9 @@ interface dataState {
 }
 
 const LogInPage: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const [data, setData] = useState<dataState>({
     email: "",
     password: "",
@@ -23,9 +28,8 @@ const LogInPage: React.FC = () => {
     email?: string;
     password?: string;
     manyAttempts?: string;
+    auth?: string;
   }>({});
-
-  // const dispatch = useAppDispatch();
 
   const validateScheme = yup.object().shape({
     password: yup
@@ -69,9 +73,14 @@ const LogInPage: React.FC = () => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return null;
-    // const redirect = history?.location?.state?.from?.pathname;
-    // dispatch(signIn({ ...data, redirect }));
-    console.log(data);
+    dispatch(signIn(data))
+      .unwrap()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((er) => {
+        setError({ auth: er });
+      });
   };
 
   return (
@@ -116,7 +125,7 @@ const LogInPage: React.FC = () => {
               <button type="submit" disabled={!isValid} className="login__btn">
                 Submit
               </button>
-
+              {error.auth ? <div className="invalid">{error?.auth}</div> : ""}
               <span className="login__signup">
                 Don&apos;t have account? <Link to="/auth/signup">Sign Up</Link>
               </span>

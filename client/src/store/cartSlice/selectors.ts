@@ -8,4 +8,4 @@ export const getTotalDiscount = (state: any) =>
   calcTotalDiscount(state.cart.items);
 
 export const getCartItemById = (id: string) => (state: any) =>
-  state.cart.items.find((item: any) => item.id === id);
+  state.cart.items.find((item: any) => item._id === id);

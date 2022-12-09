@@ -1,15 +1,13 @@
 import React from "react";
+// Libs
 import Slider from "react-slick";
+// Components
 import FlashCard from "../common/FlashCard";
+// Types
+import { IProduct } from "../../store/stuffSlice/slice";
 
 type FlashSliderProps = {
-  products: {
-    id: string;
-    discount: number;
-    cover: string;
-    name: string;
-    price: number;
-  }[];
+  products: IProduct[];
 };
 
 const SampleNextArrow: any = (props: any) => {
@@ -46,10 +44,10 @@ const FlashSlider: React.FC<FlashSliderProps> = ({ products }) => {
     <Slider {...settings}>
       {products.map((item) => (
         <FlashCard
-          key={item.id}
-          id={item.id}
+          key={item._id}
+          _id={item._id}
           discount={item.discount}
-          cover={item.cover}
+          image={item.image}
           name={item.name}
           price={item.price}
         />

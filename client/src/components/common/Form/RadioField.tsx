@@ -22,9 +22,6 @@ const RadioField: React.FC<RadioFieldProps> = ({
   const handleChange = ({ target }: any) => {
     onChange({ name: target.name, value: target.value });
   };
-  console.log(color);
-
-  const getRadioClasses = () => `radio-${color}__box ${error ? "invalid" : ""}`;
 
   return (
     <div className={`radio-${color}`}>
@@ -35,7 +32,7 @@ const RadioField: React.FC<RadioFieldProps> = ({
         {options.map((option) => (
           <div
             key={`${option.name}_${option.value}`}
-            className={getRadioClasses()}
+            className={`radio-${color}__box`}
           >
             <input
               className={`radio-${color}__input`}

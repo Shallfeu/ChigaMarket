@@ -5,7 +5,6 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 // Components
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import { store } from "./store/store";
 // Styles
 import "./index.css";
@@ -23,5 +22,3 @@ root.render(
     </Provider>
   </Router>
 );
-
-reportWebVitals();

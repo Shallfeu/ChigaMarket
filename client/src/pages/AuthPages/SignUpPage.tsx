@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // Libs
 import * as yup from "yup";
+import { useAppDispatch } from "../../store/hooks";
+// Components
 import CheckBoxField from "../../components/common/Form/CheckBoxField";
 import RadioField from "../../components/common/Form/RadioField";
 import TextField from "../../components/common/Form/TextField";
-// import { useAppSelector, useAppDispatch } from "../../store/hooks";
-// Components
+// Utils
+import { signUp } from "../../store/authSlice/actions";
 
 interface dataState {
   email: string;
@@ -31,10 +33,11 @@ const SignUpPage: React.FC = () => {
     password?: string;
     sex?: string;
     licence?: string;
+    auth?: string;
   }>({});
 
-  // const dispatch = useAppDispatch();
-
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const validateScheme = yup.object().shape({
     licence: yup.bool().oneOf([true], "You must confirm licence policy"),
 
@@ -65,14 +68,15 @@ const SignUpPage: React.FC = () => {
   function validate() {
     validateScheme
       .validate(data)
-      .then(() => setError({}))
+      .then(() => {
+        setError({});
+      })
       .catch((err) => setError({ [err.path]: err.message }));
     return Object.keys(error).length === 0;
   }
 
   useEffect(() => {
     validate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const isValid = Object.keys(error).length === 0;
@@ -85,7 +89,14 @@ const SignUpPage: React.FC = () => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return null;
-    console.log(data);
+    dispatch(signUp(data))
+      .unwrap()
+      .then(() => {
+        navigate("/");
+      })
+      .catch((er) => {
+        setError({ auth: er });
+      });
   };
 
   return (
@@ -130,7 +141,6 @@ const SignUpPage: React.FC = () => {
                 options={[
                   { name: "Male", value: "male" },
                   { name: "Female", value: "female" },
-                  { name: "Other", value: "other" },
                 ]}
                 label="Choose your sex"
                 value={data.sex}
@@ -155,7 +165,7 @@ const SignUpPage: React.FC = () => {
               <button type="submit" disabled={!isValid} className="signup__btn">
                 Submit
               </button>
-
+              {error.auth ? <div className="invalid">{error.auth}</div> : ""}
               <span className="signup__login">
                 Already have account? <Link to="/auth/login">Log In</Link>
               </span>

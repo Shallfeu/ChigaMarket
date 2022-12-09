@@ -1,9 +1,14 @@
 import React from "react";
+// Libs
 import { NavLink } from "react-router-dom";
 import Slider from "react-slick";
 
 type TopCardProps = {
-  data: any;
+  data: {
+    image: string;
+    categories: { general: string; subcategory: string };
+    desc: string;
+  }[];
 };
 
 const TopCardSlider: React.FC<TopCardProps> = ({ data }) => {
@@ -19,13 +24,18 @@ const TopCardSlider: React.FC<TopCardProps> = ({ data }) => {
   return (
     <Slider {...settings}>
       {data.map((el: any) => (
-        <NavLink to={`/all-categories/${el.para}`}>
-          <div className="top-card" key={el.para + el.desc}>
+        <NavLink
+          key={el.name + el.desc}
+          to={`/all-categories/${el.categories.general}/${el.categories.subcategory}`}
+        >
+          <div className="top-card">
             <div className="top-card__info">
-              <span className="top-card__title">{el.para}</span>
+              <span className="top-card__title">
+                {el.categories.subcategory}
+              </span>
               <span className="top-card__desc">{el.desc}</span>
             </div>
-            <img className="top-card__img" src={el.cover} alt="top-category" />
+            <img className="top-card__img" src={el.image} alt="top-category" />
           </div>
         </NavLink>
       ))}

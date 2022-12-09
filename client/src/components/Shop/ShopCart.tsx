@@ -1,22 +1,22 @@
 import React from "react";
 // Components
-import { useAppSelector } from "../../store/hooks";
-import { getAllStuff } from "../../store/stuffSlice/selectors";
 import FlashCard from "../common/FlashCard";
+// Types
+import { IProduct } from "../../store/stuffSlice/slice";
 
-const ShopCart: React.FC = () => {
-  const shop = useAppSelector(getAllStuff);
+interface ShopCartProps {
+  items: IProduct[];
+}
 
-  if (!shop) return <>Loading...</>;
-
+const ShopCart: React.FC<ShopCartProps> = ({ items }) => {
   return (
     <>
-      {shop.map((item: any) => (
+      {items.map((item) => (
         <FlashCard
-          key={item.id}
-          id={item.id}
+          key={item._id}
+          _id={item._id}
           discount={item.discount}
-          cover={item.cover}
+          image={item.image}
           name={item.name}
           price={item.price}
         />

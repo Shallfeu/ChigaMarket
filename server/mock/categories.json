@@ -1,0 +1,143 @@
+[
+  {
+    "id": "1",
+    "image": "./images/category/cat1.png",
+    "general": "Fashion",
+    "subcategories": [
+      {
+        "id": "1",
+        "general": "Shoes"
+      },
+      {
+        "id": "2",
+        "general": "Shirts"
+      },
+      {
+        "id": "3",
+        "general": "Sunglasses"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "image": "./images/category/cat2.png",
+    "general": "Electronics",
+    "subcategories": [
+      {
+        "id": "1",
+        "general": "Watches"
+      },
+      {
+        "id": "2",
+        "general": "Headphones"
+      },
+      {
+        "id": "3",
+        "general": "Mobiles"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "image": "./images/category/cat3.png",
+    "general": "Cars",
+    "subcategories": [
+      {
+        "id": "1",
+        "general": "Comfort"
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "image": "./images/category/cat4.png",
+    "general": "Home",
+    "subcategories": [
+      {
+        "id": "1",
+        "general": "Garden"
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "image": "./images/category/cat5.png",
+    "general": "Gifts",
+    "subcategories": [
+      {
+        "id": "1",
+        "general": "Goods"
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "image": "./images/category/cat6.png",
+    "general": "Music",
+    "subcategories": [
+      {
+        "id": "1",
+        "general": "Instruments"
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "image": "./images/category/cat7.png",
+    "general": "Beauty",
+    "subcategories": [
+      {
+        "id": "1",
+        "general": "Hair"
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "image": "./images/category/cat8.png",
+    "general": "Pets",
+    "subcategories": [
+      {
+        "id": "1",
+        "general": "Accessories"
+      }
+    ]
+  },
+  {
+    "id": "9",
+    "image": "./images/category/cat9.png",
+    "general": "Baby",
+    "subcategories": [
+      {
+        "id": "1",
+        "general": "Toys"
+      }
+    ]
+  },
+  {
+    "id": "10",
+    "image": "./images/category/cat10.png",
+    "general": "Groceries",
+    "subcategories": [
+      {
+        "id": "1",
+        "general": "Things"
+      }
+    ]
+  },
+  {
+    "id": "11",
+    "image": "./images/category/cat11.png",
+    "general": "Books",
+    "subcategories": [
+      {
+        "id": "1",
+        "general": "Novels"
+      },
+      {
+        "id": "2",
+        "general": "Poems"
+      }
+    ]
+  }
+]

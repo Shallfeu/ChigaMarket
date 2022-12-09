@@ -1,7 +1,6 @@
 import httpService from "./httpService";
-import localStorageService from "./localStorageService";
 
-const userEndPoint = "users/";
+const userEndPoint = "user/";
 
 const userService = {
   fetchAll: async () => {
@@ -9,12 +8,7 @@ const userService = {
     return data;
   },
 
-  create: async (payload: { _id: string; email: string; password: string }) => {
-    const { data } = await httpService.put(userEndPoint + payload._id, payload);
-    return data;
-  },
-
-  update: async (payload: any) => {
+  update: async (payload: { _id: string; email: string }) => {
     const { data } = await httpService.patch(
       userEndPoint + payload._id,
       payload
@@ -22,15 +16,16 @@ const userService = {
     return data;
   },
 
-  getCurrentUser: async () => {
-    const { data } = await httpService.get(
-      userEndPoint + localStorageService.getUserId()
+  updatePassword: async (payload: { _id: string; email: string }) => {
+    const { data } = await httpService.patch(
+      userEndPoint + payload._id,
+      payload
     );
     return data;
   },
 
-  getUserById: async (userId: string) => {
-    const { data } = await httpService.get(userEndPoint + userId);
+  getUserById: async (id: string) => {
+    const { data } = await httpService.get(userEndPoint + id);
     return data;
   },
 };

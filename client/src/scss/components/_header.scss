@@ -18,6 +18,12 @@
 .icons {
   display: flex;
 
+  &__avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+  }
+
   &__item {
     background-color: rgba(0, 0, 0, 0.1);
     width: 50px;

@@ -13,10 +13,13 @@
     "bcryptjs": "^2.4.3",
     "chalk": "^4.1.2",
     "config": "^3.3.8",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
+    "express-fileupload": "^1.4.0",
     "express-validator": "^6.14.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.7.4"
+    "mongoose": "^6.7.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

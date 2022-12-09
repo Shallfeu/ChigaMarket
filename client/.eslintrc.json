@@ -95,6 +95,9 @@
         }
       }
     ],
-    "object-shorthand": "off"
+    "object-shorthand": "off",
+    "no-unneeded-ternary": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
+    "no-sequences": "off"
   }
 }

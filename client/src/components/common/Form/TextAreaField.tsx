@@ -21,21 +21,21 @@ const TextAreaField: React.FC<TextAreaProps> = ({
     onChange({ name: target.name, value: target.value });
   };
 
-  const getInputClasses = () => `form ${error ? "is-invalid" : ""}`;
-
   return (
-    <div className="">
-      <label htmlFor={label}>{label}</label>
-      <div className="">
+    <div className="text-area">
+      <label className="text-area__label" htmlFor={label}>
+        {label}
+      </label>
+      <div className="text-area__area">
         <textarea
-          className={getInputClasses()}
+          className="text-area__input"
           id="exampleFormControlTextarea1"
           rows={rows}
           name={name}
           value={value}
           onChange={handleChange}
         ></textarea>
-        {error && <div className="invalid-feedback">{error}</div>}
+        {error && <div className="invalid">{error}</div>}
       </div>
     </div>
   );

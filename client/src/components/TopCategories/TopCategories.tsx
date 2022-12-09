@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 //
-import API from "../../api";
+import topCat from "../../mock/topCat.json";
 // Components
 import TopCardSlider from "./TopCardSlider";
+import ViewAllBtn from "../common/ViewAllBtn";
+import Loader from "../common/Loader";
 
 const TopCategories: React.FC = () => {
-  const [topCategories, setTopCategories] = useState();
-
-  useEffect(() => {
-    API.topCat.fetchAll().then((data) => setTopCategories(data));
-  }, []);
-
-  if (!topCategories) return <>Loading...</>;
+  if (!topCat) return <Loader />;
 
   return (
     <section className="top-categories">
@@ -22,16 +18,11 @@ const TopCategories: React.FC = () => {
               <i className="bi bi-border-all top-categories__icon"></i>
               <h1 className="top-categories__title">Top Categories</h1>
             </div>
-            <button
-              className="top-categories__button viewall-btn"
-              type="button"
-            >
-              View all<i className="bi bi-caret-right-fill"></i>
-            </button>
+            <ViewAllBtn direction="top-categories" />
           </div>
 
           <div className="top-categories__slider">
-            <TopCardSlider data={topCategories} />
+            <TopCardSlider data={topCat} />
           </div>
         </div>
       </div>

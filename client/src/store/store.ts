@@ -4,14 +4,16 @@ import stuffReducer from "./stuffSlice/slice";
 import cartReducer from "./cartSlice/slice";
 import usersSlice from "./usersSlice/slice";
 import ordersSlice from "./ordersSlice/slice";
-import commentsSlice from "./commentsSlice/slice";
+import reviewSlice from "./reviewSlice/slice";
+import authSlice from "./authSlice/slice";
 
 const rootReducer = combineReducers({
   stuff: stuffReducer,
   cart: cartReducer,
   users: usersSlice,
   orders: ordersSlice,
-  comments: commentsSlice,
+  reviews: reviewSlice,
+  auth: authSlice,
 });
 
 export const store = configureStore({ reducer: rootReducer });

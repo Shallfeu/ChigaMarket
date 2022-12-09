@@ -1,14 +1,34 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: any = {
+export interface IProduct {
+  _id: string;
+  name: string;
+  image: string;
+  category: {
+    general: string;
+    subcategory: string;
+    extra: string;
+  };
+  brand: string;
+  price: number;
+  discount: number;
+}
+
+interface stuffSliceAtr {
+  items: IProduct[] | null;
+  loading: boolean;
+  error: string | null;
+}
+
+const initialState: stuffSliceAtr = {
   items: null,
   loading: true,
   error: null,
 };
 
-const stuffSlice: any = createSlice({
-  name: "orders",
+const stuffSlice = createSlice({
+  name: "products",
   initialState,
   reducers: {
     StuffRequested(state) {

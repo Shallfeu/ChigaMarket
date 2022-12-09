@@ -1,4 +1,5 @@
 import React from "react";
+// Libs
 import { Link } from "react-router-dom";
 
 const CartEmpty: React.FC = () => (
@@ -15,8 +16,8 @@ const CartEmpty: React.FC = () => (
           alt="Empty cart"
         />
         <Link to="/">
-          <button type="button" className="back-button">
-            Back
+          <button type="button" className="menu-button">
+            Main Menu
           </button>
         </Link>
       </div>

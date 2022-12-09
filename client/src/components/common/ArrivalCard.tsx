@@ -1,14 +1,14 @@
 import React from "react";
 
 type ArrivalCardProps = {
-  cover: string;
+  image: string;
   name: string;
   value: string;
   isMoney?: boolean;
 };
 
 const ArrivalCard: React.FC<ArrivalCardProps> = ({
-  cover,
+  image,
   name,
   value,
   isMoney = false,
@@ -16,12 +16,12 @@ const ArrivalCard: React.FC<ArrivalCardProps> = ({
   return (
     <div className="arrival">
       <div className="arrival__icon">
-        <img className="arrival__img" src={cover} alt="arrival-img" />
+        <img className="arrival__img" src={image} alt="arrival-img" />
       </div>
       <h4 className="arrival__title">{name}</h4>
       <span className="arrival__price">
-        {value}
         {isMoney ? "$" : ""}
+        {value}
       </span>
     </div>
   );
