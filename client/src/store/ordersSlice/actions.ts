@@ -6,10 +6,10 @@ import {
   OrderRequestFailed,
 } from "./slice";
 
-export const loadOrders = () => async (dispatch: any) => {
+export const loadOrders = (userId: string) => async (dispatch: any) => {
   try {
     dispatch(OrderRequested());
-    const { content } = await ordersService.fetchAll();
+    const { content } = await ordersService.fetchAll(userId);
     dispatch(OrderRequestReceived(content));
   } catch (error: any) {
     dispatch(OrderRequestFailed(error.message));
@@ -20,6 +20,7 @@ export const createOrder = createAsyncThunk(
   "orders/createOrder",
   async (
     payload: {
+      userId: string;
       address: string;
       userName: string;
       products: any[];

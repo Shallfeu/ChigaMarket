@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 // Libs
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 // Components
 import CheckBoxField from "../../components/common/Form/CheckBoxField";
 import TextField from "../../components/common/Form/TextField";
+// Utils
 import { signIn } from "../../store/authSlice/actions";
 import { useAppDispatch } from "../../store/hooks";
 
@@ -17,6 +19,7 @@ interface dataState {
 const LogInPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [data, setData] = useState<dataState>({
     email: "",
@@ -48,8 +51,6 @@ const LogInPage: React.FC = () => {
       .email("Email is not correct"),
   });
 
-  // const loginError = useAppSelector(getAuthErrors);
-
   const validate = () => {
     validateScheme
       .validate(data)
@@ -72,13 +73,16 @@ const LogInPage: React.FC = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const isValid = validate();
+    const redirect = location.state ? location.state.referrer.pathname : "/";
+
     if (!isValid) return null;
     dispatch(signIn(data))
       .unwrap()
       .then(() => {
-        navigate("/");
+        navigate(redirect, { replace: true });
       })
       .catch((er) => {
+        toast.error(`${er}`);
         setError({ auth: er });
       });
   };

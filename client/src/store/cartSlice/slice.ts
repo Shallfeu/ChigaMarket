@@ -50,8 +50,10 @@ const cartSlice = createSlice({
     RequestDecreaseSuccess(state, { payload }: PayloadAction<CartItem>) {
       const findItem = state.items.find((item) => item._id === payload._id);
       if (findItem) {
-        if (findItem.quantity > 0) {
+        if (findItem.quantity > 1) {
           findItem.quantity -= 1;
+        } else {
+          state.items = state.items.filter((item) => item._id !== payload._id);
         }
       }
       state.totalPrice = calcTotalPrice(state.items);

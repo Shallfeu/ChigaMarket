@@ -15,7 +15,7 @@ interface OrderItemProps {
 
 const OrderItem: React.FC<OrderItemProps> = ({ _id, quantity }) => {
   const product = useAppSelector(getProductById(_id));
-
+  console.log(_id);
   if (!product) return <Loader />;
 
   const { image, name } = product;

@@ -1,38 +1,52 @@
 import React, { useEffect } from "react";
 // Libs
+import { toast } from "react-toastify";
 import { orderBy } from "lodash";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 // Utils
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import { getReviews } from "../../../store/reviewSlice/selectors";
 import {
-  createReview,
-  deleteReview,
+  CreateReview,
+  DeleteReview,
   loadReviews,
 } from "../../../store/reviewSlice/actions";
+import { getCurrentUserId } from "../../../store/authSlice/selectors";
 // Components
 import ReviewForm from "./ReviewForm";
 import ReviewsList from "./ReviewsList";
-import { getCurrentUserId } from "../../../store/authSlice/selectors";
 
 const Reviews: React.FC = () => {
   const { productId } = useParams();
-  const curretUserId = useAppSelector(getCurrentUserId);
-
   const dispatch = useAppDispatch();
-
-  const reviews = useAppSelector(getReviews());
+  const location = useLocation();
+  const curretUserId = useAppSelector(getCurrentUserId);
+  const reviews = useAppSelector(getReviews);
 
   useEffect(() => {
     dispatch(loadReviews(productId || ""));
   }, [productId]);
 
   const handleSubmit = (data: { content: string }) => {
-    dispatch(createReview({ pageId: productId, ...data }));
+    dispatch(CreateReview({ pageId: productId, ...data }))
+      .unwrap()
+      .then(() => {
+        toast.success("Review has been created");
+      })
+      .catch((e) => {
+        toast.error(e.message);
+      });
   };
 
   const handleDelete = (reviewId: string) => {
-    dispatch(deleteReview(reviewId));
+    dispatch(DeleteReview(reviewId))
+      .unwrap()
+      .then(() => {
+        toast.success("Review has been deleted");
+      })
+      .catch((e) => {
+        toast.error(e.message);
+      });
   };
 
   const sortedReviews = orderBy(reviews, ["created_at"], ["desc"]);
@@ -45,7 +59,11 @@ const Reviews: React.FC = () => {
         <div className="reviews__login">
           <p className="reviews__login-text">If you want to leave a comment,</p>
           <p className="reviews__login-text">enter your account</p>
-          <Link className="reviews__login-btn" to="/auth/login">
+          <Link
+            className="reviews__login-btn"
+            to="/auth/login"
+            state={{ referrer: location }}
+          >
             Login
           </Link>
         </div>

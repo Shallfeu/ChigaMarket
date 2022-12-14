@@ -1,3 +1,4 @@
+import React from "react";
 // Librares
 import { Outlet } from "react-router-dom";
 // Components
@@ -5,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 // Store
 
-const AuthLayout = () => {
+const AuthLayout: React.FC = () => {
   return <Outlet />;
 };
 

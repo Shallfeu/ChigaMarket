@@ -1,15 +1,24 @@
 import React from "react";
 // Libs
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 // Components
-import { getCurrentUserId } from "../../store/authSlice/selectors";
-import { useAppSelector } from "../../store/hooks";
-import { getUserById } from "../../store/usersSlice/selectors";
 import Loader from "../common/Loader";
+// Utils
+import { getCurrentUserId } from "../../store/authSlice/selectors";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getUserById } from "../../store/usersSlice/selectors";
+import { AdminMode } from "../../store/authSlice/actions";
 
 const AccountBar: React.FC = () => {
   const currentUserId = useAppSelector(getCurrentUserId);
   const currentUser = useAppSelector(getUserById(currentUserId));
+  const dispatch = useAppDispatch();
+
+  const handleAdmin = () => {
+    dispatch(AdminMode);
+    toast.success("If you want to turn off admin mode reload the page");
+  };
 
   if (!currentUser) return <Loader />;
 
@@ -56,6 +65,12 @@ const AccountBar: React.FC = () => {
           <div className="bar__item-text">
             <i className="bi bi-box-arrow-right bar__icon"></i>
             Log Out
+          </div>
+          <i className="bi bi-chevron-right"></i>
+        </Link>
+        <Link to="/" className="bar__item" onClick={handleAdmin}>
+          <div className="bar__item-text">
+            <i className="bi bi-emoji-sunglasses"></i>
           </div>
           <i className="bi bi-chevron-right"></i>
         </Link>

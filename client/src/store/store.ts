@@ -6,6 +6,8 @@ import usersSlice from "./usersSlice/slice";
 import ordersSlice from "./ordersSlice/slice";
 import reviewSlice from "./reviewSlice/slice";
 import authSlice from "./authSlice/slice";
+import searchSlice from "./searchSlice/slice";
+import categoriesSlice from "./categoriesSlice/slice";
 
 const rootReducer = combineReducers({
   stuff: stuffReducer,
@@ -14,6 +16,8 @@ const rootReducer = combineReducers({
   orders: ordersSlice,
   reviews: reviewSlice,
   auth: authSlice,
+  search: searchSlice,
+  categories: categoriesSlice,
 });
 
 export const store = configureStore({ reducer: rootReducer });

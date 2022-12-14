@@ -12,6 +12,11 @@ const schema = new Schema(
       type: String,
       required: true,
     },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     address: { type: String, required: true },
     totalCost: {
       type: Number,

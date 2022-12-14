@@ -1,9 +1,9 @@
 import React from "react";
 // Components
-import Loader from "../common/Loader";
+import Loader from "../../common/Loader";
 import FavouriteCard from "./FavouriteCard";
 // Utils
-import { getFavouriteFromLS } from "../../utils/getFavouriteFormLS";
+import { getFavouriteFromLS } from "../../../utils/getFavouriteFormLS";
 
 const Favourite: React.FC = () => {
   const favourites = getFavouriteFromLS();

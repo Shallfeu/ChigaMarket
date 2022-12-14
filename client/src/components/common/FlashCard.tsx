@@ -8,6 +8,7 @@ import { getCartItemById } from "../../store/cartSlice/selectors";
 // Utils
 import { addToCart } from "../../store/cartSlice/actions";
 import { useFavourite } from "../../hooks/useFavourite";
+import config from "../../config.json";
 
 type FlashCardProps = {
   _id: string;
@@ -50,7 +51,11 @@ const FlashCard: React.FC<FlashCardProps> = ({
       </div>
 
       <Link to={`/product/${_id}`} className="product__link">
-        <img className="product__img" src={image} alt="product__img" />
+        <img
+          className="product__img"
+          src={`${config.productEndPoint}/${image}`}
+          alt="product__img"
+        />
       </Link>
 
       <div className="product__datails">

@@ -1,4 +1,6 @@
 {
   "apiEndPoint": "http://localhost:8080/api",
+  "avatarEndPoint": "http://localhost:8080/users",
+  "productEndPoint": "http://localhost:8080/products",
   "isFireBase": false
 }

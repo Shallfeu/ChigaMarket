@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 // Libs
+import { toast } from "react-toastify";
 import * as yup from "yup";
 // Components
 import TextField from "../common/Form/TextField";
+import Loader from "../common/Loader";
 // Utils
 import { getCurrentUserId } from "../../store/authSlice/selectors";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getUserById } from "../../store/usersSlice/selectors";
-import Loader from "../common/Loader";
-import { UpdateData } from "../../store/usersSlice/actions";
+import { UpdateUserData } from "../../store/usersSlice/actions";
 
 const ChangeAdresses: React.FC = () => {
   const currentUserId = useAppSelector(getCurrentUserId);
@@ -22,6 +23,7 @@ const ChangeAdresses: React.FC = () => {
 
   const [error, setError] = useState<{
     address?: string;
+    auth?: string;
   }>({});
 
   const validateScheme = yup.object().shape({
@@ -41,6 +43,7 @@ const ChangeAdresses: React.FC = () => {
 
   useEffect(() => {
     validate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const handleChange = (target: any) => {
@@ -56,11 +59,17 @@ const ChangeAdresses: React.FC = () => {
       newAddresses.push(data.address);
 
       dispatch(
-        UpdateData({
+        UpdateUserData({
           _id: currentUser._id,
           adresses: newAddresses,
         })
-      );
+      )
+        .unwrap()
+        .then(() => toast.success("Address has been added successfully"))
+        .catch((er: string) => {
+          toast.error("Some problem occured");
+          setError({ auth: er });
+        });
 
       setData({
         address: "",
@@ -73,13 +82,18 @@ const ChangeAdresses: React.FC = () => {
       const newAddresses = currentUser.adresses.filter(
         (el: string) => el !== address
       );
-
       dispatch(
-        UpdateData({
+        UpdateUserData({
           _id: currentUser._id,
           adresses: newAddresses,
         })
-      );
+      )
+        .unwrap()
+        .then(() => toast.success("Address has been deleted successfully"))
+        .catch((er: string) => {
+          toast.error("Some problem occured");
+          setError({ auth: er });
+        });
     }
   };
 

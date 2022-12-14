@@ -60,6 +60,8 @@ button {
   color: rgb(226, 5, 5);
   font-size: 14px;
   font-weight: 500px;
+  align-self: center;
+  justify-content: center;
 }
 
 .btn-back {
@@ -103,4 +105,33 @@ button {
     font-size: 22px;
     font-weight: 500;
   }
+}
+
+.breadcrumbs {
+  margin-top: 20px;
+
+  &__item {
+    text-align: center;
+    margin-right: 10px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    background-color: #0066b2;
+    transition: 0.5s;
+    color: $white;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $gray-red;
+      color: #1c2c3c;
+    }
+  }
+}
+
+.notfound {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 800;
 }

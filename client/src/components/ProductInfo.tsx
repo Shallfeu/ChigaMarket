@@ -1,4 +1,6 @@
 import React from "react";
+// Libs
+import { toast } from "react-toastify";
 // Components
 import QuantityBtns from "./common/QuantityBtns";
 // Utils
@@ -13,6 +15,7 @@ interface ProductInfoProps {
   name: string;
   price: number;
   quantity: number;
+  desctiption: string;
 }
 
 const ProductInfo: React.FC<ProductInfoProps> = ({
@@ -22,21 +25,22 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
   name,
   price,
   quantity,
+  desctiption,
 }) => {
   const dispatch = useAppDispatch();
   const [isFavourite, setIsFavourite] = useFavourite(_id);
+
+  const handleAddToCart = () => {
+    dispatch(addToCart(_id));
+    toast.success("Product has been added to cart :)");
+  };
 
   return (
     <div className="main">
       <img src={image} alt="some" className="main__img" />
       <div className="main__info">
         <h2 className="main__title">{name}</h2>
-        <p className="main__desc">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis,
-          porro? Quia aliquam quasi consectetur, dignissimos, at ut ipsam
-          laboriosam incidunt quas velit corporis voluptate ducimus, distinctio
-          omnis accusamus in asperiores!
-        </p>
+        <p className="main__desc">{desctiption}</p>
         <span className="price-value">
           <h4 className="price__total">
             {price - (price * discount) / 100}.00$
@@ -57,7 +61,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
             <button
               type="button"
               className="addToCart"
-              onClick={() => dispatch(addToCart(_id))}
+              onClick={() => handleAddToCart()}
             >
               Add To Cart
             </button>

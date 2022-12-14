@@ -3,6 +3,7 @@ import React from "react";
 import { date } from "../../../utils/date";
 import { useAppSelector } from "../../../store/hooks";
 import { getUserById } from "../../../store/usersSlice/selectors";
+import config from "../../../config.json";
 // Components
 import Loader from "../Loader";
 import { getCurrentUserId } from "../../../store/authSlice/selectors";
@@ -24,13 +25,18 @@ const Review: React.FC<ReviewProps> = ({
 }) => {
   const currentUserId = useAppSelector(getCurrentUserId);
   const user = useAppSelector(getUserById(userId));
+  const avatar = user?.avatar ? `${config.avatarEndPoint}/${user.avatar}` : "";
 
   if (!user) return <Loader />;
 
   return (
     <div className="review">
       <div className="review__user">
-        <img src={user.image} className="review__img" alt="avatar" />
+        <img
+          src={user?.avatar ? avatar : user.image}
+          className="review__img"
+          alt="avatar"
+        />
         <div className="review__info">
           <h4 className="review__name">{user.name}</h4>
           <span className="review__time"> - {date(time)}</span>

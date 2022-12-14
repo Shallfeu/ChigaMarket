@@ -2,7 +2,7 @@ import React from "react";
 // Libs
 
 // Components
-import Discount from "../components/Discount/Discount";
+import Discount from "../components/Discount";
 import FlashDeals from "../components/FlashDeals/FlashDeals";
 import Footer from "../components/Footer";
 import NewArrivals from "../components/NewArrivals";

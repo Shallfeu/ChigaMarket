@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 // Libs
+import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useAppDispatch } from "../../store/hooks";
 // Components
@@ -77,6 +78,7 @@ const SignUpPage: React.FC = () => {
 
   useEffect(() => {
     validate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const isValid = Object.keys(error).length === 0;
@@ -92,9 +94,10 @@ const SignUpPage: React.FC = () => {
     dispatch(signUp(data))
       .unwrap()
       .then(() => {
-        navigate("/");
+        navigate("/", { replace: true });
       })
       .catch((er) => {
+        toast.error(`${er}`);
         setError({ auth: er });
       });
   };

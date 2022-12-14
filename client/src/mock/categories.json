@@ -2,141 +2,141 @@
   {
     "id": "1",
     "image": "./images/category/cat1.png",
-    "general": "Fashion",
+    "category": "Fashion",
     "subcategories": [
       {
         "id": "1",
-        "general": "Shoes"
+        "category": "Shoes"
       },
       {
         "id": "2",
-        "general": "Shirts"
+        "category": "Shirts"
       },
       {
         "id": "3",
-        "general": "Sunglasses"
+        "category": "Sunglasses"
       }
     ]
   },
   {
     "id": "2",
     "image": "./images/category/cat2.png",
-    "general": "Electronics",
+    "category": "Electronics",
     "subcategories": [
       {
         "id": "1",
-        "general": "Watches"
+        "category": "Watches"
       },
       {
         "id": "2",
-        "general": "Headphones"
+        "category": "Headphones"
       },
       {
         "id": "3",
-        "general": "Mobiles"
+        "category": "Mobiles"
       }
     ]
   },
   {
     "id": "3",
     "image": "./images/category/cat3.png",
-    "general": "Cars",
+    "category": "Cars",
     "subcategories": [
       {
         "id": "1",
-        "general": "Comfort"
+        "category": "Comfort"
       }
     ]
   },
   {
     "id": "4",
     "image": "./images/category/cat4.png",
-    "general": "Home",
+    "category": "Home",
     "subcategories": [
       {
         "id": "1",
-        "general": "Garden"
+        "category": "Garden"
       }
     ]
   },
   {
     "id": "5",
     "image": "./images/category/cat5.png",
-    "general": "Gifts",
+    "category": "Gifts",
     "subcategories": [
       {
         "id": "1",
-        "general": "Goods"
+        "category": "Goods"
       }
     ]
   },
   {
     "id": "6",
     "image": "./images/category/cat6.png",
-    "general": "Music",
+    "category": "Music",
     "subcategories": [
       {
         "id": "1",
-        "general": "Instruments"
+        "category": "Instruments"
       }
     ]
   },
   {
     "id": "7",
     "image": "./images/category/cat7.png",
-    "general": "Beauty",
+    "category": "Beauty",
     "subcategories": [
       {
         "id": "1",
-        "general": "Hair"
+        "category": "Hair"
       }
     ]
   },
   {
     "id": "8",
     "image": "./images/category/cat8.png",
-    "general": "Pets",
+    "category": "Pets",
     "subcategories": [
       {
         "id": "1",
-        "general": "Accessories"
+        "category": "Accessories"
       }
     ]
   },
   {
     "id": "9",
     "image": "./images/category/cat9.png",
-    "general": "Baby",
+    "category": "Baby",
     "subcategories": [
       {
         "id": "1",
-        "general": "Toys"
+        "category": "Toys"
       }
     ]
   },
   {
     "id": "10",
     "image": "./images/category/cat10.png",
-    "general": "Groceries",
+    "category": "Groceries",
     "subcategories": [
       {
         "id": "1",
-        "general": "Things"
+        "category": "Things"
       }
     ]
   },
   {
     "id": "11",
     "image": "./images/category/cat11.png",
-    "general": "Books",
+    "category": "Books",
     "subcategories": [
       {
         "id": "1",
-        "general": "Novels"
+        "category": "Novels"
       },
       {
         "id": "2",
-        "general": "Poems"
+        "category": "Poems"
       }
     ]
   }

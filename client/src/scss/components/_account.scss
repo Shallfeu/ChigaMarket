@@ -19,7 +19,8 @@
 
   &__bar {
     width: 30%;
-    height: 435px;
+    // height: 435px;
+    height: 475px;
     background: $white;
     padding: 25px;
   }
@@ -172,11 +173,11 @@
   &__title {
     font-size: 25px;
     font-weight: 700;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 
   &__btn {
-    margin-top: 40px;
+    margin-top: 20px;
     padding: 10px;
     border-radius: 10px;
     background: #45f3ff;
@@ -234,5 +235,18 @@
       background-color: #45f3ff;
       cursor: pointer;
     }
+  }
+}
+
+.admin-list {
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__empty {
+    font-size: 30px;
+    font-weight: 800;
   }
 }

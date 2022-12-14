@@ -1,17 +1,10 @@
-import { createAction } from "@reduxjs/toolkit";
-import reviewsService from "../../services/reviewService";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import reviewsService from "../../services/review.service";
 import {
   ReviewsRequested,
   ReviewsReceived,
   ReviewsRequestedFailed,
-  ReviewCreateRequestSuccess,
-  ReviewCreateRequestFailed,
-  ReviewDeleteRequestSuccess,
-  ReviewDeleteRequestFailed,
 } from "./slice";
-
-const ReviewCreateRequest = createAction("reviews/ReviewCreateRequest");
-const ReviewDeleteRequest = createAction("reviews/ReviewDeleteRequest");
 
 export const loadReviews = (pageId: string) => async (dispatch: any) => {
   try {
@@ -23,29 +16,30 @@ export const loadReviews = (pageId: string) => async (dispatch: any) => {
   }
 };
 
-export const createReview =
-  (data: any) => async (dispatch: any, getState: any) => {
-    const state = getState();
+export const CreateReview = createAsyncThunk(
+  "reviews/CreateReview",
+  async (payload: any, thunkAPI: any) => {
     try {
-      dispatch(ReviewCreateRequest());
       const { content } = await reviewsService.create({
-        content: data.content,
-        userId: state.auth.userId,
-        pageId: data.pageId,
+        content: payload.content,
+        userId: thunkAPI.getState().auth.userId,
+        pageId: payload.pageId,
       });
-      dispatch(ReviewCreateRequestSuccess(content));
+      return content;
     } catch (error: any) {
-      dispatch(dispatch(ReviewCreateRequestFailed(error.message)));
+      return thunkAPI.rejectWithValue(error.message);
     }
-  };
-
-export const deleteReview = (id: any) => async (dispatch: any) => {
-  try {
-    dispatch(ReviewDeleteRequest());
-    const { content } = await reviewsService.remove(id);
-    dispatch(ReviewDeleteRequestSuccess(id));
-    return content;
-  } catch (error: any) {
-    dispatch(ReviewDeleteRequestFailed(error.message));
   }
-};
+);
+
+export const DeleteReview = createAsyncThunk(
+  "reviews/DeleteReview",
+  async (payload: any, thunkAPI: any) => {
+    try {
+      await reviewsService.remove(payload);
+      return payload;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

@@ -2,12 +2,12 @@ import React from "react";
 // Libs
 import { Link } from "react-router-dom";
 // Utils
-import { useAppSelector } from "../../store/hooks";
-import { getProductById } from "../../store/stuffSlice/selectors";
+import { useAppSelector } from "../../../store/hooks";
+import { getProductById } from "../../../store/stuffSlice/selectors";
 // Components
-import Loader from "../common/Loader";
-import ArrivalCard from "../common/ArrivalCard";
-import { useFavourite } from "../../hooks/useFavourite";
+import Loader from "../../common/Loader";
+import ArrivalCard from "../../common/ArrivalCard";
+import { useFavourite } from "../../../hooks/useFavourite";
 
 interface OrderItemProps {
   _id: string;
@@ -24,7 +24,7 @@ const FavouriteCard: React.FC<OrderItemProps> = ({ _id }) => {
   return (
     <div key={_id} className="orders__item">
       <Link to={`/product/${_id}`}>
-        <ArrivalCard image={image} name={name} value={`${price}`} />
+        <ArrivalCard image={image} name={name} value={`${price}`} isMoney />
       </Link>
       <i
         className={`main__like ${

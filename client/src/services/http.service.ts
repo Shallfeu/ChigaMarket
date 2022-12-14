@@ -1,9 +1,10 @@
+// Libs
 import axios from "axios";
 import { toast } from "react-toastify";
-
+// Utils
 import configFile from "../config.json";
-import authService from "./authService";
-import localStorageService from "./localStorageService";
+import authService from "./auth.service";
+import localStorageService from "./localStorage.service";
 
 const http = axios.create({ baseURL: configFile.apiEndPoint });
 

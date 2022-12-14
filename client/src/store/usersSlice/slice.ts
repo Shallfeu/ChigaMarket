@@ -1,12 +1,14 @@
 // Libs
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { UpdatePassword } from "./actions";
+// Utils
+import { UpdateUserData, UploadAvatar, DeleteAvatar } from "./actions";
 
 export type IUser = {
   _id: string;
   email: string;
   image: string;
+  avatar: string;
   licence: boolean;
   name: string;
   password: string;
@@ -43,19 +45,32 @@ const usersSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
-
-    UpdateUsers(state, { payload }: PayloadAction<any>) {
-      if (state.items) {
-        const updatedIndex = state.items.findIndex(
-          (el) => el._id === payload._id
-        );
-        state.items[updatedIndex] = { ...payload };
-      }
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(
-      UpdatePassword.fulfilled,
+      UpdateUserData.fulfilled,
+      (state, { payload }: PayloadAction<any>) => {
+        if (state.items) {
+          const updatedIndex = state.items.findIndex(
+            (el) => el._id === payload._id
+          );
+          state.items[updatedIndex] = { ...payload };
+        }
+      }
+    );
+    builder.addCase(
+      UploadAvatar.fulfilled,
+      (state, { payload }: PayloadAction<any>) => {
+        if (state.items) {
+          const updatedIndex = state.items.findIndex(
+            (el) => el._id === payload._id
+          );
+          state.items[updatedIndex] = { ...payload };
+        }
+      }
+    );
+    builder.addCase(
+      DeleteAvatar.fulfilled,
       (state, { payload }: PayloadAction<any>) => {
         if (state.items) {
           const updatedIndex = state.items.findIndex(
@@ -68,11 +83,7 @@ const usersSlice = createSlice({
   },
 });
 
-export const {
-  UsersRequested,
-  UsersReceived,
-  UsersRequestedFailed,
-  UpdateUsers,
-} = usersSlice.actions;
+export const { UsersRequested, UsersReceived, UsersRequestedFailed } =
+  usersSlice.actions;
 
 export default usersSlice.reducer;

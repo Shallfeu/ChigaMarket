@@ -1,4 +1,4 @@
-import httpService from "./httpService";
+import httpService from "./http.service";
 
 const stuffEndPoint = "product/";
 
@@ -8,7 +8,7 @@ const stuffService = {
     return data;
   },
 
-  create: async (payload: { _id: string; email: string; password: string }) => {
+  create: async (payload: any) => {
     const { data } = await httpService.post(stuffEndPoint, payload);
     return data;
   },
@@ -21,8 +21,8 @@ const stuffService = {
     return data;
   },
 
-  getProductById: async (productId: string) => {
-    const { data } = await httpService.get(stuffEndPoint + productId);
+  delete: async (productId: string) => {
+    const { data } = await httpService.delete(stuffEndPoint + productId);
     return data;
   },
 };

@@ -9,6 +9,7 @@ import { RemoveItem } from "../../store/cartSlice/actions";
 import { useFavourite } from "../../hooks/useFavourite";
 // Types
 import { CartItem } from "../../store/cartSlice/slice";
+import config from "../../config.json";
 
 const CartItemBox: React.FC<CartItem> = ({
   _id,
@@ -34,7 +35,11 @@ const CartItemBox: React.FC<CartItem> = ({
   return (
     <div className="details__item" key={_id}>
       <Link to={`/product/${_id}`}>
-        <img src={image} alt="product" className="item__img" />
+        <img
+          src={`${config.productEndPoint}/${image}`}
+          alt="product"
+          className="item__img"
+        />
       </Link>
 
       <div className="item__information">
@@ -75,11 +80,11 @@ const CartItemBox: React.FC<CartItem> = ({
 
         <div className="item__price">
           <span className="price-value">
-            <h4 className="price__total">{totalPriceWithDiscount}.00$</h4>
-            <h6 className="price__total-crossed">{totalPrice}.00$</h6>
+            <h4 className="price__total">${totalPriceWithDiscount}</h4>
+            <h6 className="price__total-crossed">${totalPrice}</h6>
           </span>
 
-          <QuantityBtns _id={_id} quantity={quantity} />
+          <QuantityBtns _id={_id} quantity={quantity} disable />
         </div>
       </div>
     </div>

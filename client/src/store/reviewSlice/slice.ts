@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { CreateReview, DeleteReview } from "./actions";
 
 export interface IReview {
   _id: string;
@@ -38,34 +39,20 @@ const ReviewSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
-
-    ReviewCreateRequestSuccess(state, { payload }: PayloadAction<IReview>) {
+  },
+  extraReducers: (builder) => {
+    builder.addCase(CreateReview.fulfilled, (state, { payload }) => {
       state.items?.push(payload);
-    },
+    });
 
-    ReviewCreateRequestFailed(state, { payload }: PayloadAction<string>) {
-      state.error = payload;
-    },
-
-    ReviewDeleteRequestSuccess(state, { payload }: PayloadAction<string>) {
+    builder.addCase(DeleteReview.fulfilled, (state, { payload }) => {
       if (state.items)
         state.items = state.items.filter((el) => el._id !== payload);
-    },
-
-    ReviewDeleteRequestFailed(state, { payload }: PayloadAction<string>) {
-      state.error = payload;
-    },
+    });
   },
 });
 
-export const {
-  ReviewsRequested,
-  ReviewsReceived,
-  ReviewsRequestedFailed,
-  ReviewCreateRequestSuccess,
-  ReviewCreateRequestFailed,
-  ReviewDeleteRequestSuccess,
-  ReviewDeleteRequestFailed,
-} = ReviewSlice.actions;
+export const { ReviewsRequested, ReviewsReceived, ReviewsRequestedFailed } =
+  ReviewSlice.actions;
 
 export default ReviewSlice.reducer;

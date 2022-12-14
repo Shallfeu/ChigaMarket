@@ -1,4 +1,6 @@
 import React from "react";
+// Utils
+import config from "../../config.json";
 
 type ArrivalCardProps = {
   image: string;
@@ -16,7 +18,11 @@ const ArrivalCard: React.FC<ArrivalCardProps> = ({
   return (
     <div className="arrival">
       <div className="arrival__icon">
-        <img className="arrival__img" src={image} alt="arrival-img" />
+        <img
+          className="arrival__img"
+          src={`${config.productEndPoint}/${image}`}
+          alt="arrival-img"
+        />
       </div>
       <h4 className="arrival__title">{name}</h4>
       <span className="arrival__price">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // Librares
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header/Header";
@@ -6,6 +6,8 @@ import Header from "../components/Header/Header";
 import AccountBar from "../components/Account/AccountBar";
 
 const AccountLayout: React.FC = () => {
+  useEffect(() => window.scrollTo(0, 0), []);
+
   return (
     <>
       <Header />

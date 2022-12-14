@@ -1,6 +1,7 @@
+// Libs
 import axios from "axios";
-
-import localStorageService from "./localStorageService";
+// Utils
+import localStorageService from "./localStorage.service";
 import config from "../config.json";
 
 const httpAuth = axios.create({

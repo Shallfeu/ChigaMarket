@@ -8,7 +8,10 @@ router
   .get(async (req, res) => {
     try {
       const { orderBy, equalTo } = req.query;
-      const list = await Review.find({ [orderBy]: equalTo });
+
+      const list =
+        orderBy && equalTo ? await Review.find({ [orderBy]: equalTo }) : await Review.find();
+
       res.send(list);
     } catch (e) {
       res.status(500).json({

@@ -9,13 +9,15 @@ import { loadOrders } from "../../store/ordersSlice/actions";
 import { getAllOrders } from "../../store/ordersSlice/selectors";
 import OrderItem from "./OrderItem";
 import { date } from "../../utils/date";
+import { getCurrentUserId } from "../../store/authSlice/selectors";
 
 const OrdersList: React.FC = () => {
   const dispatch = useAppDispatch();
+  const currentUserId = useAppSelector(getCurrentUserId);
 
   useEffect(() => {
-    dispatch(loadOrders());
-  }, []);
+    if (currentUserId) dispatch(loadOrders(currentUserId));
+  }, [dispatch, currentUserId]);
 
   const orders = useAppSelector(getAllOrders);
 

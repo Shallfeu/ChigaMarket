@@ -1,12 +1,12 @@
 [
   {
     "image": "./images/top/category-1.png",
-    "categories": { "general": "electronic", "subcategory": "headphones" },
+    "categories": { "general": "electronics", "subcategory": "headphones" },
     "desc": "3k orders this week"
   },
   {
     "image": "./images/top/category-2.png",
-    "categories": { "general": "electronic", "subcategory": "watches" },
+    "categories": { "general": "electronics", "subcategory": "watches" },
     "desc": "4k orders this week"
   },
   {

@@ -1,4 +1,4 @@
-import httpService from "./httpService";
+import httpService from "./http.service";
 
 const orderEndPoint = "order/";
 
@@ -8,8 +8,15 @@ const ordersService = {
     return data;
   },
 
-  fetchAll: async () => {
-    const { data } = await httpService.get(orderEndPoint);
+  fetchAll: async (userId?: string) => {
+    const { data } = userId
+      ? await httpService.get(orderEndPoint, {
+          params: {
+            orderBy: "userId",
+            equalTo: `${userId}`,
+          },
+        })
+      : await httpService.get(orderEndPoint);
     return data;
   },
 };

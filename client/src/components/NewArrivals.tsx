@@ -27,7 +27,7 @@ const NewArrivals: React.FC = () => {
               <h1 className="arrivals__title">New Arrivals</h1>
             </div>
 
-            <ViewAllBtn direction="new-arrivals" />
+            <ViewAllBtn direction="?main=arrivals" />
           </div>
           <div className="arrivals__cells">
             {products.map((product) => (

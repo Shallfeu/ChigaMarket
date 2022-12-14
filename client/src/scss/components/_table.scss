@@ -1,0 +1,79 @@
+$base-spacing-unit: 24px;
+$half-spacing-unit: $base-spacing-unit / 2;
+
+$color-alpha: #1772ff;
+$color-form-highlight: #eeeeee;
+
+.table {
+  margin-top: 20px;
+  width: 100%;
+  border: 1px solid $color-form-highlight;
+}
+
+.table-link {
+  cursor: pointer;
+}
+
+.table-header {
+  display: flex;
+  width: 100%;
+  padding: ($half-spacing-unit * 1.5) 0;
+  background-color: #1c2c3c;
+}
+
+.table-header-item {
+  text-transform: uppercase;
+}
+
+.table-img {
+  width: 100%;
+  max-width: 150px;
+  height: 100%;
+  max-height: 150px;
+  border-radius: 50%;
+  border: 3px solid #1772ff;
+}
+
+.table-row {
+  display: flex;
+  width: 100%;
+  padding: ($half-spacing-unit * 1.5) 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &:nth-of-type(odd) {
+    background: $color-form-highlight;
+  }
+}
+
+.table-data,
+.header__item {
+  flex: 1 1 20%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.header__item {
+  text-transform: uppercase;
+}
+
+.table-head {
+  flex: 1 1 20%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.table-head-but {
+  flex: 1 1 20%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    color: #1772ff;
+  }
+}

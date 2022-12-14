@@ -1,0 +1,51 @@
+.subcategory {
+  &__inner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__title {
+    font-size: 26px;
+    font-weight: 700;
+  }
+
+  &__items {
+    display: flex;
+  }
+
+  &__item {
+    padding: 5px 10px;
+    background: #1c2c3c;
+    color: $white;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &__delete {
+    padding: 5px;
+    margin-left: 5px;
+    background-color: $gray-red;
+    border-radius: 50%;
+    color: $white;
+    transition: 0.7s;
+    display: flex;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #0f3460;
+    }
+  }
+
+  &__form {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 // Libs
 import * as yup from "yup";
-import { getCurrentUserId } from "../../store/authSlice/selectors";
+import { toast } from "react-toastify";
 // Components
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { UpdatePassword } from "../../store/usersSlice/actions";
 import TextField from "../common/Form/TextField";
+// Utils
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { UpdateUserPassword } from "../../store/usersSlice/actions";
+import { getCurrentUserId } from "../../store/authSlice/selectors";
 
 interface dataState {
   oldPassword: string;
@@ -29,6 +31,14 @@ const ChangePassword: React.FC = () => {
     repeatNewPassword?: string;
     auth?: string;
   }>({});
+
+  const clearFields = () => {
+    setData({
+      oldPassword: "",
+      newPassword: "",
+      repeatNewPassword: "",
+    });
+  };
 
   const validateScheme = yup.object().shape({
     repeatNewPassword: yup
@@ -96,14 +106,19 @@ const ChangePassword: React.FC = () => {
     if (!isValid) return null;
     if (currentUserId)
       dispatch(
-        UpdatePassword({
+        UpdateUserPassword({
           _id: currentUserId,
           password: data.oldPassword,
           newPassword: data.newPassword,
         })
       )
         .unwrap()
-        .catch((er) => {
+        .then(() => {
+          toast.success("Password has been edit successfully");
+          clearFields();
+        })
+        .catch((er: string) => {
+          toast.error("Some problem occured");
           setError({ auth: er });
         });
   };

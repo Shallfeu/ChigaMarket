@@ -10,17 +10,15 @@ const schema = new Schema({
     require: true,
   },
   category: {
-    general: {
-      type: String,
-      require: true,
-    },
-    subcategory: {
-      type: String,
-      require: true,
-    },
-    extra: {
-      type: String,
-    },
+    type: String,
+    require: true,
+  },
+  subcategory: {
+    type: String,
+    require: true,
+  },
+  extra: {
+    type: String,
   },
   image: {
     type: String,
@@ -31,6 +29,9 @@ const schema = new Schema({
     require: true,
   },
   discount: {
+    type: String,
+  },
+  description: {
     type: String,
   },
 });

@@ -14,7 +14,6 @@ function useFavourite(_id: string) {
   }, []);
 
   const handleAddToFavourites = () => {
-    console.log("hehe");
     setFavouriteToLS(_id);
     setIsFavourite((prevState) => !prevState);
     if (!isFavourite) toast.success("Product has been added to favourite :)");

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+// Libs
+import { toast } from "react-toastify";
 // Components
 import CartEmpty from "../components/Cart/CartEmpty";
 import CartItemBox from "../components/Cart/CartItemBox";
@@ -12,8 +14,10 @@ import {
   getTotalPrice,
 } from "../store/cartSlice/selectors";
 import { useAppSelector } from "../store/hooks";
+import { getCurrentUserId } from "../store/authSlice/selectors";
 
 const Cart: React.FC = () => {
+  const currentUserId = useAppSelector(getCurrentUserId);
   const products = useAppSelector(getCartItems);
   const totalDiscount = useAppSelector(getTotalDiscount);
   const totalPrice = useAppSelector(getTotalPrice) - totalDiscount;
@@ -26,6 +30,14 @@ const Cart: React.FC = () => {
         <CartEmpty />
       </>
     );
+
+  const handlePay = () => {
+    if (currentUserId) {
+      setToggle(true);
+    } else {
+      toast.warn("If you want to create an order, login your account");
+    }
+  };
 
   return (
     <>
@@ -58,7 +70,7 @@ const Cart: React.FC = () => {
               <button
                 type="button"
                 className="payment__button"
-                onClick={() => setToggle(true)}
+                onClick={handlePay}
               >
                 Go to payment
               </button>

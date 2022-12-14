@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 // Libs
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 // Utils
 import { getCurrentUserId } from "../../store/authSlice/selectors";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getUserById } from "../../store/usersSlice/selectors";
+import config from "../../config.json";
 // Components
 import Loader from "../common/Loader";
 import SelectField from "../common/Form/SelectField";
@@ -68,13 +70,20 @@ const OrderForm: React.FC<OrderFormProps> = ({ products, totalCost }) => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return null;
-    dispatch(createOrder({ products, totalCost, ...data }))
+
+    dispatch(
+      createOrder({ userId: currentUserId, products, totalCost, ...data })
+    )
       .unwrap()
       .then(() => {
         dispatch(ClearCart());
+        toast.success("Order has been created");
         navigate("/account");
       })
-      .catch((er) => setError({ danger: er }));
+      .catch((er) => {
+        toast.error("Some problem occured, try it later");
+        setError({ danger: er });
+      });
   };
 
   if (!currentUser) return <Loader />;
@@ -94,7 +103,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ products, totalCost }) => {
             {products.map((product) => (
               <div className="order__product" key={product._id}>
                 <img
-                  src={product.image}
+                  src={`${config.productEndPoint}/${product.image}`}
                   alt="product"
                   className="order__product-img"
                 />
@@ -120,7 +129,7 @@ const OrderForm: React.FC<OrderFormProps> = ({ products, totalCost }) => {
             name="userName"
             value={data.userName}
             error={error.userName ? error.userName : null}
-            color="blue"
+            color="black"
             onChange={handleChange}
           />
 

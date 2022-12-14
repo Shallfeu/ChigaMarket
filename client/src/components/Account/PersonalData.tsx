@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 // Libs
+import { toast } from "react-toastify";
 import * as yup from "yup";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
 // Components
 import RadioField from "../common/Form/RadioField";
 import TextField from "../common/Form/TextField";
+import Loader from "../common/Loader";
+import Avatar from "../Avatar";
+// Utils
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getUserById } from "../../store/usersSlice/selectors";
 import { getCurrentUserId } from "../../store/authSlice/selectors";
-import Loader from "../common/Loader";
-import { UpdateData } from "../../store/usersSlice/actions";
+import { UpdateUserData } from "../../store/usersSlice/actions";
 
 interface dataState {
   email: string;
@@ -31,6 +34,7 @@ const PersonalData: React.FC = () => {
     email?: string;
     name?: string;
     sex?: string;
+    auth?: string;
   }>({});
 
   const validateScheme = yup.object().shape({
@@ -57,6 +61,7 @@ const PersonalData: React.FC = () => {
 
   useEffect(() => {
     validate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const isValid = Object.keys(error).length === 0;
@@ -69,7 +74,13 @@ const PersonalData: React.FC = () => {
     e.preventDefault();
     const isValid = validate();
     if (!isValid) return null;
-    dispatch(UpdateData({ ...data, _id: currentUser?._id || "" }));
+    dispatch(UpdateUserData({ ...data, _id: currentUser?._id || "" }))
+      .unwrap()
+      .then(() => toast.success("Personal Data has been edit successfully"))
+      .catch((er: string) => {
+        toast.error("Some problem occured");
+        setError({ auth: er });
+      });
   };
 
   if (!currentUser) return <Loader />;
@@ -78,7 +89,7 @@ const PersonalData: React.FC = () => {
     <div className="change">
       <h2 className="change__title">Personal Data</h2>
       <form onSubmit={handleSubmit} className="change__form">
-        <img src={currentUser.image} alt="avatar" />
+        <Avatar currentUser={currentUser} />
         <TextField
           type="text"
           label="Nickname"
@@ -103,6 +114,7 @@ const PersonalData: React.FC = () => {
         <button type="submit" disabled={!isValid} className="change__btn">
           Change
         </button>
+        {error.auth ? <div className="invalid">{error?.auth}</div> : ""}
       </form>
     </div>
   );

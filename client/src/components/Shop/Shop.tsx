@@ -42,7 +42,14 @@ const Shop: React.FC = () => {
             </div>
 
             <div className="shop__content">
-              <ShopCart items={filteredData} />
+              {filteredData.length > 0 ? (
+                <ShopCart items={filteredData} />
+              ) : (
+                <h4 className="all-categories__run">
+                  Sorry, now we are running out of these items, but we think how
+                  to figure it out!
+                </h4>
+              )}
             </div>
           </div>
         </div>

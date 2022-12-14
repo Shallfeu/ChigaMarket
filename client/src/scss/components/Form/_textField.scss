@@ -93,3 +93,51 @@
     color: $white;
   }
 }
+
+.input-black {
+  margin-top: 20px;
+
+  &__area {
+    position: relative;
+
+    span {
+      position: absolute;
+      left: 0;
+      padding: 10px;
+      color: #8f8f8f;
+      pointer-events: none;
+      letter-spacing: 0.05em;
+      transition: 0.5s;
+    }
+  }
+
+  &__box {
+    width: 300px;
+    height: 30px;
+    padding: 20px 10px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #1c2c3c;
+    font-size: 1em;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid #1c2c3c;
+
+    ::placeholder {
+      color: #1c2c3c;
+    }
+
+    &:focus {
+      color: #1c2c3c;
+    }
+  }
+
+  &__btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 12px;
+    background: transparent;
+    color: $white;
+  }
+}

@@ -1,4 +1,4 @@
-import httpService from "./httpService";
+import httpService from "./http.service";
 
 const reviewEndPoint = "review/";
 
@@ -13,12 +13,14 @@ const reviewsService = {
   },
 
   fetchAll: async (pageId: string) => {
-    const { data } = await httpService.get(reviewEndPoint, {
-      params: {
-        orderBy: "pageId",
-        equalTo: `${pageId}`,
-      },
-    });
+    const { data } = pageId
+      ? await httpService.get(reviewEndPoint, {
+          params: {
+            orderBy: "pageId",
+            equalTo: `${pageId}`,
+          },
+        })
+      : await httpService.get(reviewEndPoint);
     return data;
   },
 
