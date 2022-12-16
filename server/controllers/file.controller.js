@@ -58,7 +58,7 @@ class FileController {
       if (fs.existsSync(path)) {
         return res.status(400).json({ message: 'File already exists' });
       }
-      file.mv(path);
+      await file.mv(path);
 
       const type = file.name.split('.').pop();
       const dbFile = new File({
@@ -86,7 +86,9 @@ class FileController {
       const user = await User.findById(req.user._id);
       const avatarName = (await uuid.v4()) + '.jpg';
 
-      file.mv(path.join(req.filePath, 'users', avatarName), (err) => {
+      const uploadPath = path.join(req.filePath, 'users', avatarName)
+
+      await file.mv(uploadPath, function(err) {
         if (err) {
           return res.status(500).send(err);
         }
@@ -121,7 +123,9 @@ class FileController {
       const product = await Product.findById(key);
       const imgName = (await uuid.v4()) + '.jpg';
 
-      file.mv(path.join(req.filePath, 'products', imgName), (err) => {
+      const uploadPath = path.join(req.filePath, 'products', imgName)
+
+      await file.mv(uploadPath, function (err) {
         if (err) {
           return res.status(500).send(err);
         }

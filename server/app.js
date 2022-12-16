@@ -11,7 +11,7 @@ const filePath = require('./middleware/filepath.middleware')
 
 const app = express();
 
-app.use(fileUpload({}));
+app.use(fileUpload({ createParentPath: true }));
 app.use(filePath(path.join(__dirname, 'static')))
 app.use(express.json());
 app.use('/image', express.static(path.join(__dirname, 'static')));
