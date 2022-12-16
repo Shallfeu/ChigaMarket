@@ -1,6 +1,6 @@
 {
-  "apiEndPoint": "http://81.163.31.39/api",
-  "avatarEndPoint": "http://81.163.31.39/image/users",
-  "productEndPoint": "http://81.163.31.39/image/products",
+  "apiEndPoint": "http://77.223.96.250/api",
+  "avatarEndPoint": "http://77.223.96.250/image/users",
+  "productEndPoint": "http://77.223.96.250/image/products",
   "isFireBase": false
 }
