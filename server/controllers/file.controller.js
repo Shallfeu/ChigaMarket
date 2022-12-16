@@ -3,6 +3,7 @@ const File = require('../models/File');
 const User = require('../models/User');
 const Product = require('../models/Product');
 const config = require('config');
+const path = require('path');
 const fs = require('fs');
 const uuid = require('uuid');
 
@@ -84,7 +85,13 @@ class FileController {
       const file = req.files.file;
       const user = await User.findById(req.user._id);
       const avatarName = (await uuid.v4()) + '.jpg';
-      file.mv(`${config.get('staticPath')}\\users\\${avatarName}`);
+
+      file.mv(path.join(req.filePath, 'users', avatarName), (err) => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+      })
+
       user.avatar = avatarName;
       user.save();
       return res.send(user);
@@ -97,7 +104,7 @@ class FileController {
   async deleteAvatar(req, res) {
     try {
       const user = await User.findById(req.user._id);
-      fs.unlinkSync(`${config.get('staticPath')}\\users\\${user.avatar}`);
+      fs.unlinkSync(path.join(req.filePath, 'users', user.avatar));
       user.avatar = null;
       user.save();
       return res.send(user);
@@ -113,7 +120,13 @@ class FileController {
       const file = req.files[`${key}`];
       const product = await Product.findById(key);
       const imgName = (await uuid.v4()) + '.jpg';
-      file.mv(`${config.get('staticPath')}\\products\\${imgName}`);
+
+      file.mv(path.join(req.filePath, 'products', imgName), (err) => {
+        if (err) {
+          return res.status(500).send(err);
+        }
+      })
+
       product.image = imgName;
       product.save();
       return res.send(product);
@@ -126,7 +139,7 @@ class FileController {
   async deleteProductImg(req, res) {
     try {
       const product = await Product.findById(req.body._id);
-      fs.unlinkSync(`${config.get('staticPath')}\\products\\${product.image}`);
+      fs.unlinkSync(path.join(req.filePath, 'products', product.image));
       product.image = null;
       product.save();
       return res.send(product);

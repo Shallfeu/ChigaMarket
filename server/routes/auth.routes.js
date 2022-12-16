@@ -46,7 +46,7 @@ router.post('/signUp', [
       const tokens = tokenService.generate({ _id: newUser._id });
       await tokenService.save(newUser._id, tokens.refreshToken);
 
-      await fileService.createDir(new File({ user: newUser._id, name: '' }));
+      // await fileService.createDir(req, new File({ user: newUser._id, name: '' }));
 
       res.status(201).send({ ...tokens, userId: newUser._id });
     } catch (e) {

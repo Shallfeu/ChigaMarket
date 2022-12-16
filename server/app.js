@@ -6,17 +6,28 @@ const chalk = require('chalk');
 const initDatabase = require('./startUp/initDatabase');
 const routes = require('./routes');
 const cors = require('cors');
+const path = require('path');
+const filePath = require('./middleware/filepath.middleware')
 
 const app = express();
 
 app.use(fileUpload({}));
+app.use(filePath(path.join(__dirname, 'static')))
 app.use(express.json());
-app.use(express.static(config.get('staticPath')));
+app.use('/image', express.static(path.join(__dirname, 'static')));
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use('/api', routes);
 
 const PORT = process.env.port || config.get('port');
+
+if (process.env.NODE_ENV === 'production') {
+  app.use('/', express.static(path.join(__dirname, 'client')));
+  const indexPath = path.join(__dirname, 'client', 'index.html');
+  app.get('*', (req, res) => {
+    res.sendFile(indexPath);
+  });
+}
 
 async function start() {
   try {

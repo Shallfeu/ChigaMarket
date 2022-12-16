@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.patch('/:productId', async (req, res) => {
+router.patch('/:productId', auth, async (req, res) => {
   try {
     const { productId } = req.params;
     const product = Product.findById(productId);

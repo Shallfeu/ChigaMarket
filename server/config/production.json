@@ -1,0 +1,8 @@
+{
+  "port": 8080,
+  "mongoUri": "mongodb://uynwxregp43bizoie4m4:FKRiiWJYYXxigJv94vzF@n1-c2-mongodb-clevercloud-customers.services.clever-cloud.com:27017,n2-c2-mongodb-clevercloud-customers.services.clever-cloud.com:27017/bf2g1phe53t557w?replicaSet=rs0",
+  "accessSecret": "secret from back",
+  "refreshSecret": "key from nowhere",
+  "filePath": "C:\\Users\\Chigv\\Desktop\\Frontend\\React\\ChigaMarket\\server\\files",
+  "staticPath": "C:\\Users\\Chigv\\Desktop\\Frontend\\React\\ChigaMarket\\server\\static"
+}
