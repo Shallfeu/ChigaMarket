@@ -15,29 +15,29 @@ interface dataState {
   repeatNewPassword: string;
 }
 
+interface errorState {
+  oldPassword?: string;
+  newPassword?: string;
+  repeatNewPassword?: string;
+  auth?: string;
+}
+
 const ChangePassword: React.FC = () => {
   const currentUserId = useAppSelector(getCurrentUserId);
   const dispatch = useAppDispatch();
 
-  const [data, setData] = useState<dataState>({
+  const initialState = {
     oldPassword: "",
     newPassword: "",
     repeatNewPassword: "",
-  });
+  };
 
-  const [error, setError] = useState<{
-    oldPassword?: string;
-    newPassword?: string;
-    repeatNewPassword?: string;
-    auth?: string;
-  }>({});
+  const [data, setData] = useState<dataState>(initialState);
+
+  const [error, setError] = useState<errorState>({});
 
   const clearFields = () => {
-    setData({
-      oldPassword: "",
-      newPassword: "",
-      repeatNewPassword: "",
-    });
+    setData(initialState);
   };
 
   const validateScheme = yup.object().shape({
@@ -96,12 +96,12 @@ const ChangePassword: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  const handleChange = (target: any) => {
+  const handleChange = (target: { name: string; value: string }) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const isValid = validate();
     if (!isValid) return null;
     if (currentUserId)
@@ -117,9 +117,9 @@ const ChangePassword: React.FC = () => {
           toast.success("Password has been edit successfully");
           clearFields();
         })
-        .catch((er: string) => {
+        .catch((error: string) => {
           toast.error("Some problem occured");
-          setError({ auth: er });
+          setError({ auth: error });
         });
   };
 
@@ -161,6 +161,7 @@ const ChangePassword: React.FC = () => {
         <button type="submit" disabled={!isValid} className="change__btn">
           Change
         </button>
+
         {error.auth ? <div className="invalid">{error?.auth}</div> : ""}
       </form>
     </div>

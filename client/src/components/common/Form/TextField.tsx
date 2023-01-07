@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-type TextFieldProps = {
+interface TextFieldProps {
   type?: string;
   label: string;
   name: string;
@@ -8,7 +8,7 @@ type TextFieldProps = {
   error: string | null;
   color: string;
   onChange: (e: any) => void;
-};
+}
 
 const TextField: React.FC<TextFieldProps> = ({
   type = "text",
@@ -19,7 +19,7 @@ const TextField: React.FC<TextFieldProps> = ({
   onChange,
   color,
 }) => {
-  const handleChange = ({ target }: any) => {
+  const handleChange = ({ target }: { target: HTMLInputElement }) => {
     onChange({ name: target.name, value: target.value });
   };
 

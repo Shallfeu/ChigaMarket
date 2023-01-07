@@ -19,23 +19,27 @@ interface dataState {
   sex: string;
 }
 
+interface errorState {
+  email?: string;
+  name?: string;
+  sex?: string;
+  auth?: string;
+}
+
 const PersonalData: React.FC = () => {
   const currentUserId = useAppSelector(getCurrentUserId);
   const currentUser = useAppSelector(getUserById(currentUserId));
   const dispatch = useAppDispatch();
 
-  const [data, setData] = useState<dataState>({
+  const initialState = {
     email: currentUser?.email || "",
     name: currentUser?.name || "",
     sex: currentUser?.sex || "",
-  });
+  };
 
-  const [error, setError] = useState<{
-    email?: string;
-    name?: string;
-    sex?: string;
-    auth?: string;
-  }>({});
+  const [data, setData] = useState<dataState>(initialState);
+
+  const [error, setError] = useState<errorState>({});
 
   const validateScheme = yup.object().shape({
     sex: yup.string().required("Sex must be chosen"),
@@ -66,20 +70,20 @@ const PersonalData: React.FC = () => {
 
   const isValid = Object.keys(error).length === 0;
 
-  const handleChange = (target: any) => {
+  const handleChange = (target: { name: string; value: string }) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const isValid = validate();
     if (!isValid) return null;
     dispatch(UpdateUserData({ ...data, _id: currentUser?._id || "" }))
       .unwrap()
       .then(() => toast.success("Personal Data has been edit successfully"))
-      .catch((er: string) => {
+      .catch((error: string) => {
         toast.error("Some problem occured");
-        setError({ auth: er });
+        setError({ auth: error });
       });
   };
 
@@ -90,6 +94,7 @@ const PersonalData: React.FC = () => {
       <h2 className="change__title">Personal Data</h2>
       <form onSubmit={handleSubmit} className="change__form">
         <Avatar currentUser={currentUser} />
+
         <TextField
           type="text"
           label="Nickname"
@@ -99,6 +104,7 @@ const PersonalData: React.FC = () => {
           color="blue"
           onChange={handleChange}
         />
+
         <RadioField
           options={[
             { name: "Male", value: "male" },
@@ -111,9 +117,11 @@ const PersonalData: React.FC = () => {
           error={error.sex ? error.sex : null}
           onChange={handleChange}
         />
+
         <button type="submit" disabled={!isValid} className="change__btn">
           Change
         </button>
+
         {error.auth ? <div className="invalid">{error?.auth}</div> : ""}
       </form>
     </div>

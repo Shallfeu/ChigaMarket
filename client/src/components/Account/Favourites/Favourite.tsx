@@ -13,6 +13,7 @@ const Favourite: React.FC = () => {
   return (
     <>
       <h3 className="favourite__title">Favourite</h3>
+
       <div className="favourite__list">
         {favourites.length < 1 ? (
           <div className="favourite__empty">

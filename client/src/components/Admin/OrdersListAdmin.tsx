@@ -9,20 +9,20 @@ import Loader from "../common/Loader";
 import Table from "../common/Table/index";
 import BackBtn from "../common/BackBtn";
 
+interface sortState {
+  path: string;
+  order: "asc" | "desc";
+}
 const OrdersListAdmin: React.FC = () => {
   const orders = useAppSelector(getAllOrders);
-  const [sortBy, setSortBy] = useState<{
-    path: string;
-    order: "asc" | "desc";
-  }>({
+  const [sortBy, setSortBy] = useState<sortState>({
     path: "string",
     order: "asc",
   });
 
   if (!orders) return <Loader />;
 
-  const handleSort = (item: { path: string; order: "asc" | "desc" }) =>
-    setSortBy(item);
+  const handleSort = (item: sortState) => setSortBy(item);
 
   const sortedOrders = _.orderBy(orders, [sortBy.path], sortBy.order);
 
@@ -37,6 +37,7 @@ const OrdersListAdmin: React.FC = () => {
     <div className="admin-list">
       <div className="container">
         <BackBtn />
+
         <div className="admin-list__inner">
           {sortedOrders.length !== 0 ? (
             <Table

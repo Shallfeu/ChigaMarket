@@ -30,14 +30,25 @@ interface dataState {
   extra?: string;
 }
 
+interface errorState {
+  name?: string;
+  price?: string;
+  discount?: string;
+  description?: string;
+  brand?: string;
+  category?: string;
+  subcategory?: string;
+  extra?: string;
+}
+
 const ProductForm: React.FC = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
-  const [pic, setPic] = useState<any>(null);
-  const categories = useAppSelector(getAllCategories);
   const dispatch = useAppDispatch();
-  const product = useAppSelector(getProductById(productId as any));
-  const [data, setData] = useState<dataState>({
+  const categories = useAppSelector(getAllCategories);
+  const product = useAppSelector(getProductById(productId as string));
+
+  const initialState = {
     name: "",
     price: "",
     discount: "",
@@ -46,18 +57,11 @@ const ProductForm: React.FC = () => {
     category: "",
     subcategory: "",
     extra: "",
-  });
+  };
 
-  const [error, setError] = useState<{
-    name?: string;
-    price?: string;
-    discount?: string;
-    description?: string;
-    brand?: string;
-    category?: string;
-    subcategory?: string;
-    extra?: string;
-  }>({});
+  const [pic, setPic] = useState<any>(null);
+  const [data, setData] = useState<dataState>(initialState);
+  const [error, setError] = useState<errorState>({});
 
   const validateScheme = yup.object().shape({
     subcategory: yup.string().required("Subcategory is required"),
@@ -92,7 +96,7 @@ const ProductForm: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  const handleChange = (target: any) => {
+  const handleChange = (target: { name: string; value: string }) => {
     if (target.name === "category") {
       setData((prevState) => ({ ...prevState, subcategory: "" }));
     }
@@ -100,8 +104,8 @@ const ProductForm: React.FC = () => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const isValid = validate();
     if (!isValid) return null;
     if (productId) {
@@ -117,8 +121,8 @@ const ProductForm: React.FC = () => {
           toast.success("Product has been edited");
           navigate("/admin/products");
         })
-        .catch((er) => {
-          toast.error(er);
+        .catch((error) => {
+          toast.error(error);
         });
     } else {
       dispatch(
@@ -150,8 +154,8 @@ const ProductForm: React.FC = () => {
           toast.success("Product has been deleted");
           navigate("/admin/products");
         })
-        .catch((er) => {
-          toast.error(er);
+        .catch((error) => {
+          toast.error(error);
         });
     }
   };
@@ -178,6 +182,7 @@ const ProductForm: React.FC = () => {
     <div className="edit-product">
       <form onSubmit={handleSubmit} className="edit-product__form">
         <h2 className="edit-product__title">Edit Product</h2>
+
         <ProductImage image={pic ? pic : product?.image} setImage={setPic} />
 
         <TextField
@@ -257,6 +262,7 @@ const ProductForm: React.FC = () => {
         <button type="submit" disabled={!isValid} className="edit-product__btn">
           <span>Edit</span>
         </button>
+
         {productId && (
           <button
             type="button"

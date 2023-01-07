@@ -11,20 +11,27 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getUserById } from "../../store/usersSlice/selectors";
 import { UpdateUserData } from "../../store/usersSlice/actions";
 
+interface dataState {
+  address: string;
+}
+
+interface errorState {
+  address?: string;
+  auth?: string;
+}
+
 const ChangeAdresses: React.FC = () => {
   const currentUserId = useAppSelector(getCurrentUserId);
   const currentUser = useAppSelector(getUserById(currentUserId));
-
   const dispatch = useAppDispatch();
 
-  const [data, setData] = useState<{ address: string }>({
+  const initialState = {
     address: "",
-  });
+  };
 
-  const [error, setError] = useState<{
-    address?: string;
-    auth?: string;
-  }>({});
+  const [data, setData] = useState<dataState>(initialState);
+
+  const [error, setError] = useState<errorState>({});
 
   const validateScheme = yup.object().shape({
     address: yup.string().required("Address is required"),
@@ -46,12 +53,12 @@ const ChangeAdresses: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  const handleChange = (target: any) => {
+  const handleChange = (target: { name: string; value: string }) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const isValid = validate();
     if (!isValid) return null;
     if (currentUser) {
@@ -71,17 +78,13 @@ const ChangeAdresses: React.FC = () => {
           setError({ auth: er });
         });
 
-      setData({
-        address: "",
-      });
+      setData(initialState);
     }
   };
 
   const handleDelete = (address: string) => {
     if (currentUser) {
-      const newAddresses = currentUser.adresses.filter(
-        (el: string) => el !== address
-      );
+      const newAddresses = currentUser.adresses.filter((el) => el !== address);
       dispatch(
         UpdateUserData({
           _id: currentUser._id,
@@ -90,9 +93,9 @@ const ChangeAdresses: React.FC = () => {
       )
         .unwrap()
         .then(() => toast.success("Address has been deleted successfully"))
-        .catch((er: string) => {
+        .catch((error: string) => {
           toast.error("Some problem occured");
-          setError({ auth: er });
+          setError({ auth: error });
         });
     }
   };
@@ -102,6 +105,7 @@ const ChangeAdresses: React.FC = () => {
   return (
     <div className="address">
       <h2 className="change__title">Addresses</h2>
+
       <div className="address__inner">
         <ul className="address__list">
           {currentUser.adresses.map((address, index) => (
@@ -117,6 +121,7 @@ const ChangeAdresses: React.FC = () => {
             </li>
           ))}
         </ul>
+
         <form onSubmit={handleSubmit} className="address__form">
           <TextField
             type="text"

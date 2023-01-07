@@ -13,17 +13,21 @@ import Loader from "../common/Loader";
 import SelectField from "../common/Form/SelectField";
 import TextField from "../common/Form/TextField";
 
+interface dataState {
+  category: string;
+  newSub: string;
+}
+
 const EditSubcategoryForm: React.FC = () => {
   const categories = useAppSelector(getAllCategories);
   const dispatch = useAppDispatch();
 
-  const [data, setData] = useState<{
-    category: string;
-    newSub: string;
-  }>({
+  const initialState = {
     newSub: "",
     category: "",
-  });
+  };
+
+  const [data, setData] = useState<dataState>(initialState);
 
   if (!categories) return <Loader />;
 
@@ -36,12 +40,12 @@ const EditSubcategoryForm: React.FC = () => {
     ? categories.find((cat) => cat._id === data.category)
     : null;
 
-  const handleChange = (target: any) => {
+  const handleChange = (target: { name: string; value: string }) => {
     setData((prevState) => ({ ...prevState, [target.name]: target.value }));
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     dispatch(
       CreateSubcategory({ category: data.category, subcategory: data.newSub })
     )
@@ -53,8 +57,8 @@ const EditSubcategoryForm: React.FC = () => {
           newSub: "",
         }));
       })
-      .catch((er: string) => {
-        toast.error(er);
+      .catch((error: string) => {
+        toast.error(error);
       });
   };
 
@@ -82,11 +86,13 @@ const EditSubcategoryForm: React.FC = () => {
     <div className="subcategory">
       <div className="subcategory__inner">
         <h2 className="subcategory__title">Edit categories</h2>
+
         {selectedCategory && (
           <div className="subcategory__items">
             {selectedCategory.subcategories.map((cat) => (
               <div className="subcategory__item" key={cat._id}>
                 {cat.category}
+
                 <button
                   type="button"
                   className="subcategory__delete"
@@ -98,6 +104,7 @@ const EditSubcategoryForm: React.FC = () => {
             ))}
           </div>
         )}
+
         <form onSubmit={handleSubmit} className="subcategory__form">
           <SelectField
             label="Category"
